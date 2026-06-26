@@ -1,5 +1,4 @@
 
-
 // import { useState, useEffect } from "react"
 // import { useNavigate } from "react-router-dom"
 
@@ -576,27 +575,168 @@
 // }
 
 // /* ── Courses ── */
+// // function Courses({ data, setData, teachers }) {
+// //   const empty = { name: "", duration: "12 months", fee: "", seats: "40", enrolled: "0", status: "active", teacher: "", batchTime: "", syllabus: "", startDate: "", description: "" }
+// //   const [modal, setModal] = useState(null)
+// //   const [viewModal, setViewModal] = useState(null)
+// //   const [form, setForm] = useState(empty)
+// //   const handle = e => setForm({ ...form, [e.target.name]: e.target.value })
+// //   const openAdd = () => { setForm(empty); setModal({ mode: "add" }) }
+// //   const openEdit = item => { setForm({ ...item }); setModal({ mode: "edit", item }) }
+// //   const submit = () => {
+// //     if (modal.mode === "add") { const u = [...data, { ...form, id: Date.now() }]; setData(u); save("courses", u) }
+// //     else { const u = data.map(c => c.id === modal.item.id ? { ...form, id: c.id } : c); setData(u); save("courses", u) }
+// //     setModal(null)
+// //   }
+// //   const del = id => { if (!confirm("Delete this course?")) return; const u = data.filter(c => c.id !== id); setData(u); save("courses", u) }
+// //   const teacherOptions = ["—", ...teachers.map(t => t.name)]
+// //   return (
+// //     <>
+// //       <SectionHeader title="Courses" subtitle={`${data.length} courses · ${data.reduce((a, c) => a + Number(c.enrolled), 0)} total enrolled`} onAdd={openAdd} addLabel="+ Add Course" />
+// //       <div className="card" style={{ overflowX: "auto" }}>
+// //         <table className="activity-table">
+// //           <thead><tr><th>Course Name</th><th>Teacher</th><th>Duration</th><th>Fee (₹)</th><th>Batch Time</th><th>Seats</th><th>Status</th><th>Actions</th></tr></thead>
+// //           <tbody>
+// //             {data.map(c => {
+// //               const pct = Math.round((Number(c.enrolled) / Number(c.seats)) * 100)
+// //               return (
+// //                 <tr key={c.id}>
+// //                   <td>
+// //                     <div style={{ color: "var(--cream)", fontWeight: 500 }}>{c.name}</div>
+// //                     <div style={{ fontSize: 11, color: "var(--text-muted)" }}>{c.syllabus}</div>
+// //                   </td>
+// //                   <td style={{ fontSize: 13 }}>{c.teacher || "—"}</td>
+// //                   <td>{c.duration}</td>
+// //                   <td>₹{Number(c.fee).toLocaleString()}</td>
+// //                   <td style={{ fontSize: 12, color: "var(--text-muted)" }}>{c.batchTime || "—"}</td>
+// //                   <td>
+// //                     <div style={{ fontSize: 12 }}>{c.enrolled}/{c.seats}</div>
+// //                     <div style={{ width: 50, height: 3, background: "rgba(255,255,255,0.1)", borderRadius: 100, marginTop: 4 }}>
+// //                       <div style={{ width: pct + "%", height: "100%", background: pct > 85 ? "#f87171" : "var(--gold)", borderRadius: 100 }} />
+// //                     </div>
+// //                   </td>
+// //                   <td><span className={`status-badge status-${c.status}`}>{c.status}</span></td>
+// //                   <td>
+// //                     <ActionBtn label="View" color="#60a5fa" onClick={() => setViewModal(c)} />
+// //                     <ActionBtn label="Edit" onClick={() => openEdit(c)} />
+// //                     <ActionBtn label="Delete" color="#f87171" onClick={() => del(c.id)} />
+// //                   </td>
+// //                 </tr>
+// //               )
+// //             })}
+// //           </tbody>
+// //         </table>
+// //       </div>
+
+// //       {viewModal && (
+// //         <Modal title="Course Details" onClose={() => setViewModal(null)} wide>
+// //           <InfoRow label="Course Name" value={viewModal.name} />
+// //           <InfoRow label="Duration" value={viewModal.duration} />
+// //           <InfoRow label="Fee" value={"₹" + Number(viewModal.fee).toLocaleString()} />
+// //           <InfoRow label="Batch Time" value={viewModal.batchTime} />
+// //           <InfoRow label="Start Date" value={viewModal.startDate} />
+// //           <InfoRow label="Teacher" value={viewModal.teacher} />
+// //           <InfoRow label="Total Seats" value={viewModal.seats} />
+// //           <InfoRow label="Enrolled" value={viewModal.enrolled} />
+// //           <InfoRow label="Syllabus" value={viewModal.syllabus} />
+// //           <InfoRow label="Status" value={viewModal.status} />
+// //           {viewModal.description && (
+// //             <div style={{ marginTop: 12, padding: "12px 16px", background: "rgba(255,255,255,0.03)", borderRadius: 8 }}>
+// //               <div style={{ fontSize: 12, color: "var(--gold)", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, marginBottom: 8 }}>Description</div>
+// //               <div style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7 }}>{viewModal.description}</div>
+// //             </div>
+// //           )}
+// //         </Modal>
+// //       )}
+
+// //       {modal && (
+// //         <Modal title={modal.mode === "add" ? "Add Course" : "Edit Course"} onClose={() => setModal(null)} wide>
+// //           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 20px" }}>
+// //             <Field label="Course Name"   name="name"      value={form.name}      onChange={handle} />
+// //             <Field label="Duration"      name="duration"  value={form.duration}  onChange={handle} options={["3 months", "6 months", "10 months", "12 months", "18 months", "24 months"]} />
+// //             <Field label="Fee (₹)"       name="fee"       value={form.fee}       onChange={handle} type="number" />
+// //             <Field label="Total Seats"   name="seats"     value={form.seats}     onChange={handle} type="number" />
+// //             <Field label="Enrolled"      name="enrolled"  value={form.enrolled}  onChange={handle} type="number" />
+// //             <Field label="Start Date"    name="startDate" value={form.startDate} onChange={handle} type="date" />
+// //             <Field label="Batch Time"    name="batchTime" value={form.batchTime} onChange={handle} placeholder="e.g. 7:00 AM – 9:00 AM" />
+// //             <Field label="Assigned Teacher" name="teacher" value={form.teacher}  onChange={handle} options={teacherOptions} />
+// //             <Field label="Status"        name="status"    value={form.status}    onChange={handle} options={["active", "inactive"]} />
+// //           </div>
+// //           <Field label="Syllabus Topics" name="syllabus" value={form.syllabus} onChange={handle} placeholder="e.g. Physics, Chemistry, Mathematics" />
+// //           <div style={{ marginBottom: 16 }}>
+// //             <label style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", marginBottom: 6 }}>Course Description</label>
+// //             <textarea name="description" value={form.description} onChange={handle} rows={3}
+// //               style={{ width: "100%", padding: "11px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "var(--text)", fontFamily: "'DM Sans',sans-serif", fontSize: 14, outline: "none", resize: "vertical", boxSizing: "border-box" }} />
+// //           </div>
+// //           <button className="btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 8 }} onClick={submit}>
+// //             {modal.mode === "add" ? "Add Course" : "Save Changes"}
+// //           </button>
+// //         </Modal>
+// //       )}
+// //     </>
+// //   )
+// // }
+
+
 // function Courses({ data, setData, teachers }) {
-//   const empty = { name: "", duration: "12 months", fee: "", seats: "40", enrolled: "0", status: "active", teacher: "", batchTime: "", syllabus: "", startDate: "", description: "" }
+//   const empty = {
+//     name: "", duration: "12 months", fee: "", seats: "40", enrolled: "0",
+//     status: "active", teacher: "", batchTime: "", syllabus: "", startDate: "",
+//     description: "",
+//     // Public page ke liye extra fields
+//     thumb: "", badge: "Science", level: "Beginner", mode: "Offline", rating: "4.8"
+//   }
+
 //   const [modal, setModal] = useState(null)
 //   const [viewModal, setViewModal] = useState(null)
 //   const [form, setForm] = useState(empty)
+
 //   const handle = e => setForm({ ...form, [e.target.name]: e.target.value })
 //   const openAdd = () => { setForm(empty); setModal({ mode: "add" }) }
 //   const openEdit = item => { setForm({ ...item }); setModal({ mode: "edit", item }) }
+
 //   const submit = () => {
-//     if (modal.mode === "add") { const u = [...data, { ...form, id: Date.now() }]; setData(u); save("courses", u) }
-//     else { const u = data.map(c => c.id === modal.item.id ? { ...form, id: c.id } : c); setData(u); save("courses", u) }
+//     if (modal.mode === "add") {
+//       const u = [...data, { ...form, id: Date.now() }]
+//       setData(u); save("courses", u)
+//     } else {
+//       const u = data.map(c => c.id === modal.item.id ? { ...form, id: c.id } : c)
+//       setData(u); save("courses", u)
+//     }
 //     setModal(null)
 //   }
-//   const del = id => { if (!confirm("Delete this course?")) return; const u = data.filter(c => c.id !== id); setData(u); save("courses", u) }
+
+//   const del = id => {
+//     if (!confirm("Delete this course?")) return
+//     const u = data.filter(c => c.id !== id)
+//     setData(u); save("courses", u)
+//   }
+
 //   const teacherOptions = ["—", ...teachers.map(t => t.name)]
+
 //   return (
 //     <>
-//       <SectionHeader title="Courses" subtitle={`${data.length} courses · ${data.reduce((a, c) => a + Number(c.enrolled), 0)} total enrolled`} onAdd={openAdd} addLabel="+ Add Course" />
+//       <SectionHeader
+//         title="Courses"
+//         subtitle={`${data.length} courses · ${data.reduce((a, c) => a + Number(c.enrolled), 0)} total enrolled`}
+//         onAdd={openAdd}
+//         addLabel="+ Add Course"
+//       />
+
 //       <div className="card" style={{ overflowX: "auto" }}>
 //         <table className="activity-table">
-//           <thead><tr><th>Course Name</th><th>Teacher</th><th>Duration</th><th>Fee (₹)</th><th>Batch Time</th><th>Seats</th><th>Status</th><th>Actions</th></tr></thead>
+//           <thead>
+//             <tr>
+//               <th>Course Name</th>
+//               <th>Teacher</th>
+//               <th>Duration</th>
+//               <th>Fee (₹)</th>
+//               <th>Batch Time</th>
+//               <th>Seats</th>
+//               <th>Status</th>
+//               <th>Actions</th>
+//             </tr>
+//           </thead>
 //           <tbody>
 //             {data.map(c => {
 //               const pct = Math.round((Number(c.enrolled) / Number(c.seats)) * 100)
@@ -629,18 +769,29 @@
 //         </table>
 //       </div>
 
+//       {/* ── View Modal ── */}
 //       {viewModal && (
 //         <Modal title="Course Details" onClose={() => setViewModal(null)} wide>
-//           <InfoRow label="Course Name" value={viewModal.name} />
-//           <InfoRow label="Duration" value={viewModal.duration} />
-//           <InfoRow label="Fee" value={"₹" + Number(viewModal.fee).toLocaleString()} />
-//           <InfoRow label="Batch Time" value={viewModal.batchTime} />
-//           <InfoRow label="Start Date" value={viewModal.startDate} />
-//           <InfoRow label="Teacher" value={viewModal.teacher} />
-//           <InfoRow label="Total Seats" value={viewModal.seats} />
-//           <InfoRow label="Enrolled" value={viewModal.enrolled} />
-//           <InfoRow label="Syllabus" value={viewModal.syllabus} />
-//           <InfoRow label="Status" value={viewModal.status} />
+//           <InfoRow label="Course Name"  value={viewModal.name} />
+//           <InfoRow label="Duration"     value={viewModal.duration} />
+//           <InfoRow label="Fee"          value={"₹" + Number(viewModal.fee).toLocaleString()} />
+//           <InfoRow label="Batch Time"   value={viewModal.batchTime} />
+//           <InfoRow label="Start Date"   value={viewModal.startDate} />
+//           <InfoRow label="Teacher"      value={viewModal.teacher} />
+//           <InfoRow label="Total Seats"  value={viewModal.seats} />
+//           <InfoRow label="Enrolled"     value={viewModal.enrolled} />
+//           <InfoRow label="Syllabus"     value={viewModal.syllabus} />
+//           <InfoRow label="Status"       value={viewModal.status} />
+//           <InfoRow label="Category"     value={viewModal.badge} />
+//           <InfoRow label="Level"        value={viewModal.level} />
+//           <InfoRow label="Mode"         value={viewModal.mode} />
+//           <InfoRow label="Rating"       value={viewModal.rating} />
+//           {viewModal.thumb && (
+//             <div style={{ marginTop: 12 }}>
+//               <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", marginBottom: 8 }}>Thumbnail Preview</div>
+//               <img src={viewModal.thumb} alt="thumb" style={{ width: "100%", maxHeight: 160, objectFit: "cover", borderRadius: 8, opacity: 0.85 }} />
+//             </div>
+//           )}
 //           {viewModal.description && (
 //             <div style={{ marginTop: 12, padding: "12px 16px", background: "rgba(255,255,255,0.03)", borderRadius: 8 }}>
 //               <div style={{ fontSize: 12, color: "var(--gold)", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, marginBottom: 8 }}>Description</div>
@@ -650,26 +801,52 @@
 //         </Modal>
 //       )}
 
+//       {/* ── Add / Edit Modal ── */}
 //       {modal && (
 //         <Modal title={modal.mode === "add" ? "Add Course" : "Edit Course"} onClose={() => setModal(null)} wide>
 //           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 20px" }}>
-//             <Field label="Course Name"   name="name"      value={form.name}      onChange={handle} />
-//             <Field label="Duration"      name="duration"  value={form.duration}  onChange={handle} options={["3 months", "6 months", "10 months", "12 months", "18 months", "24 months"]} />
-//             <Field label="Fee (₹)"       name="fee"       value={form.fee}       onChange={handle} type="number" />
-//             <Field label="Total Seats"   name="seats"     value={form.seats}     onChange={handle} type="number" />
-//             <Field label="Enrolled"      name="enrolled"  value={form.enrolled}  onChange={handle} type="number" />
-//             <Field label="Start Date"    name="startDate" value={form.startDate} onChange={handle} type="date" />
-//             <Field label="Batch Time"    name="batchTime" value={form.batchTime} onChange={handle} placeholder="e.g. 7:00 AM – 9:00 AM" />
-//             <Field label="Assigned Teacher" name="teacher" value={form.teacher}  onChange={handle} options={teacherOptions} />
-//             <Field label="Status"        name="status"    value={form.status}    onChange={handle} options={["active", "inactive"]} />
+//             <Field label="Course Name"      name="name"      value={form.name}      onChange={handle} />
+//             <Field label="Duration"         name="duration"  value={form.duration}  onChange={handle} options={["3 months","6 months","10 months","12 months","18 months","24 months"]} />
+//             <Field label="Fee (₹)"          name="fee"       value={form.fee}       onChange={handle} type="number" />
+//             <Field label="Total Seats"      name="seats"     value={form.seats}     onChange={handle} type="number" />
+//             <Field label="Enrolled"         name="enrolled"  value={form.enrolled}  onChange={handle} type="number" />
+//             <Field label="Start Date"       name="startDate" value={form.startDate} onChange={handle} type="date" />
+//             <Field label="Batch Time"       name="batchTime" value={form.batchTime} onChange={handle} placeholder="e.g. 7:00 AM – 9:00 AM" />
+//             <Field label="Assigned Teacher" name="teacher"   value={form.teacher}   onChange={handle} options={teacherOptions} />
+//             <Field label="Status"           name="status"    value={form.status}    onChange={handle} options={["active","inactive"]} />
+//             <Field label="Rating"           name="rating"    value={form.rating}    onChange={handle} placeholder="e.g. 4.9" />
+//             <Field label="Category / Badge" name="badge"     value={form.badge}     onChange={handle} options={["Science","Commerce","Technology","Arts","Language","Entrance"]} />
+//             <Field label="Level"            name="level"     value={form.level}     onChange={handle} options={["Beginner","Intermediate","Advanced"]} />
+//             <Field label="Mode"             name="mode"      value={form.mode}      onChange={handle} options={["Offline","Online","Hybrid"]} />
 //           </div>
+
 //           <Field label="Syllabus Topics" name="syllabus" value={form.syllabus} onChange={handle} placeholder="e.g. Physics, Chemistry, Mathematics" />
+
+//           <Field label="Thumbnail URL" name="thumb" value={form.thumb} onChange={handle} placeholder="https://images.unsplash.com/..." />
+//           {form.thumb && (
+//             <div style={{ marginBottom: 16 }}>
+//               <img src={form.thumb} alt="preview" style={{ width: "100%", maxHeight: 140, objectFit: "cover", borderRadius: 8, opacity: 0.8 }} />
+//             </div>
+//           )}
+
 //           <div style={{ marginBottom: 16 }}>
-//             <label style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", marginBottom: 6 }}>Course Description</label>
-//             <textarea name="description" value={form.description} onChange={handle} rows={3}
-//               style={{ width: "100%", padding: "11px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "var(--text)", fontFamily: "'DM Sans',sans-serif", fontSize: 14, outline: "none", resize: "vertical", boxSizing: "border-box" }} />
+//             <label style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", marginBottom: 6 }}>
+//               Course Description
+//             </label>
+//             <textarea
+//               name="description"
+//               value={form.description}
+//               onChange={handle}
+//               rows={3}
+//               style={{ width: "100%", padding: "11px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "var(--text)", fontFamily: "'DM Sans',sans-serif", fontSize: 14, outline: "none", resize: "vertical", boxSizing: "border-box" }}
+//             />
 //           </div>
-//           <button className="btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 8 }} onClick={submit}>
+
+//           <button
+//             className="btn-primary"
+//             style={{ width: "100%", justifyContent: "center", marginTop: 8 }}
+//             onClick={submit}
+//           >
 //             {modal.mode === "add" ? "Add Course" : "Save Changes"}
 //           </button>
 //         </Modal>
@@ -677,6 +854,36 @@
 //     </>
 //   )
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // /* ── Timetable ── */
 // function Timetable({ data, setData }) {
@@ -985,28 +1192,146 @@
 //   )
 // }
 
+
+
+
+
+
+
+
+
+
+
+
+
 // /* ── Gallery ── */
+// // function Gallery({ data, setData }) {
+// //   const empty = { caption: "", url: "", category: "Event", album: "" }
+// //   const [modal, setModal] = useState(null)
+// //   const [form, setForm] = useState(empty)
+// //   const [filterCat, setFilterCat] = useState("All")
+// //   const [lightbox, setLightbox] = useState(null)
+// //   const handle = e => setForm({ ...form, [e.target.name]: e.target.value })
+// //   const openAdd = () => { setForm(empty); setModal({ mode: "add" }) }
+// //   const openEdit = item => { setForm({ ...item }); setModal({ mode: "edit", item }) }
+// //   const submit = () => {
+// //     if (modal.mode === "add") { const u = [...data, { ...form, id: Date.now() }]; setData(u); save("gallery", u) }
+// //     else { const u = data.map(g => g.id === modal.item.id ? { ...form, id: g.id } : g); setData(u); save("gallery", u) }
+// //     setModal(null)
+// //   }
+// //   const del = id => { if (!confirm("Delete this image?")) return; const u = data.filter(g => g.id !== id); setData(u); save("gallery", u) }
+// //   const categories = ["All", ...new Set(data.map(g => g.category))]
+// //   const filtered = filterCat === "All" ? data : data.filter(g => g.category === filterCat)
+// //   const albums = [...new Set(data.map(g => g.album).filter(Boolean))]
+// //   return (
+// //     <>
+// //       <SectionHeader title="Gallery" subtitle={`${data.length} images · ${albums.length} albums`} onAdd={openAdd} addLabel="+ Add Image" />
+// //       <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
+// //         {categories.map(c => (
+// //           <button key={c} onClick={() => setFilterCat(c)} style={{
+// //             padding: "7px 16px", borderRadius: 100, fontSize: 12, fontWeight: 600, cursor: "pointer",
+// //             background: filterCat === c ? "var(--gold)" : "rgba(255,255,255,0.05)",
+// //             color: filterCat === c ? "var(--dark)" : "var(--text-muted)",
+// //             border: "1px solid " + (filterCat === c ? "var(--gold)" : "rgba(255,255,255,0.1)"),
+// //             fontFamily: "'DM Sans',sans-serif",
+// //           }}>{c}</button>
+// //         ))}
+// //       </div>
+// //       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 16 }}>
+// //         {filtered.map(g => (
+// //           <div key={g.id} className="card" style={{ overflow: "hidden" }}>
+// //             <div onClick={() => setLightbox(g)} style={{ height: 150, backgroundImage: `url('${g.url}')`, backgroundSize: "cover", backgroundPosition: "center", cursor: "zoom-in", position: "relative" }}>
+// //               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0)", transition: "background 0.2s" }} className="gallery-hover" />
+// //             </div>
+// //             <div style={{ padding: "14px 16px" }}>
+// //               <div style={{ fontSize: 13, fontWeight: 600, color: "var(--cream)", marginBottom: 2 }}>{g.caption}</div>
+// //               <div style={{ fontSize: 11, color: "var(--gold)", letterSpacing: 1, textTransform: "uppercase", marginBottom: g.album ? 2 : 10 }}>{g.category}</div>
+// //               {g.album && <div style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 10 }}>📁 {g.album}</div>}
+// //               <div>
+// //                 <ActionBtn label="Edit" onClick={() => openEdit(g)} />
+// //                 <ActionBtn label="Delete" color="#f87171" onClick={() => del(g.id)} />
+// //               </div>
+// //             </div>
+// //           </div>
+// //         ))}
+// //       </div>
+
+// //       {/* Lightbox */}
+// //       {lightbox && (
+// //         <div style={{ position: "fixed", inset: 0, zIndex: 99999, background: "rgba(0,0,0,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }} onClick={() => setLightbox(null)}>
+// //           <div style={{ textAlign: "center" }} onClick={e => e.stopPropagation()}>
+// //             <img src={lightbox.url} alt={lightbox.caption} style={{ maxWidth: "80vw", maxHeight: "70vh", borderRadius: 12, boxShadow: "0 20px 60px rgba(0,0,0,0.8)" }} />
+// //             <div style={{ fontSize: 15, color: "var(--cream)", marginTop: 16 }}>{lightbox.caption}</div>
+// //             <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 4 }}>{lightbox.album} · {lightbox.category}</div>
+// //             <button onClick={() => setLightbox(null)} style={{ marginTop: 16, background: "rgba(255,255,255,0.1)", border: "none", color: "var(--text-muted)", padding: "8px 20px", borderRadius: 8, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>Close</button>
+// //           </div>
+// //         </div>
+// //       )}
+
+// //       {modal && (
+// //         <Modal title={modal.mode === "add" ? "Add Image" : "Edit Image"} onClose={() => setModal(null)}>
+// //           <Field label="Caption"     name="caption"  value={form.caption}  onChange={handle} />
+// //           <Field label="Image URL"   name="url"      value={form.url}      onChange={handle} />
+// //           <Field label="Category"    name="category" value={form.category} onChange={handle} options={["Event", "Academic", "Sports", "Campus", "Cultural", "Other"]} />
+// //           <Field label="Album Name"  name="album"    value={form.album}    onChange={handle} placeholder="e.g. Convocation 2024" />
+// //           {form.url && (
+// //             <div style={{ marginBottom: 16, borderRadius: 8, overflow: "hidden", height: 140, backgroundImage: `url('${form.url}')`, backgroundSize: "cover", backgroundPosition: "center", border: "1px solid rgba(201,168,76,0.2)" }} />
+// //           )}
+// //           <button className="btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={submit}>
+// //             {modal.mode === "add" ? "Add Image" : "Save Changes"}
+// //           </button>
+// //         </Modal>
+// //       )}
+// //     </>
+// //   )
+// // }
+
+
 // function Gallery({ data, setData }) {
-//   const empty = { caption: "", url: "", category: "Event", album: "" }
+//   const empty = { caption: "", url: "", category: "Events", album: "", year: new Date().getFullYear().toString() }
 //   const [modal, setModal] = useState(null)
 //   const [form, setForm] = useState(empty)
 //   const [filterCat, setFilterCat] = useState("All")
 //   const [lightbox, setLightbox] = useState(null)
+
 //   const handle = e => setForm({ ...form, [e.target.name]: e.target.value })
 //   const openAdd = () => { setForm(empty); setModal({ mode: "add" }) }
 //   const openEdit = item => { setForm({ ...item }); setModal({ mode: "edit", item }) }
+
 //   const submit = () => {
-//     if (modal.mode === "add") { const u = [...data, { ...form, id: Date.now() }]; setData(u); save("gallery", u) }
-//     else { const u = data.map(g => g.id === modal.item.id ? { ...form, id: g.id } : g); setData(u); save("gallery", u) }
+//     let u
+//     if (modal.mode === "add") {
+//       u = [...data, { ...form, id: Date.now() }]
+//     } else {
+//       u = data.map(g => g.id === modal.item.id ? { ...form, id: g.id } : g)
+//     }
+//     setData(u)
+//     // Direct localStorage save — key "gallery" pe
+//     localStorage.setItem("gallery", JSON.stringify(u))
 //     setModal(null)
 //   }
-//   const del = id => { if (!confirm("Delete this image?")) return; const u = data.filter(g => g.id !== id); setData(u); save("gallery", u) }
+
+//   const del = id => {
+//     if (!confirm("Delete this image?")) return
+//     const u = data.filter(g => g.id !== id)
+//     setData(u)
+//     localStorage.setItem("gallery", JSON.stringify(u))
+//   }
+
 //   const categories = ["All", ...new Set(data.map(g => g.category))]
 //   const filtered = filterCat === "All" ? data : data.filter(g => g.category === filterCat)
 //   const albums = [...new Set(data.map(g => g.album).filter(Boolean))]
+
 //   return (
 //     <>
-//       <SectionHeader title="Gallery" subtitle={`${data.length} images · ${albums.length} albums`} onAdd={openAdd} addLabel="+ Add Image" />
+//       <SectionHeader
+//         title="Gallery"
+//         subtitle={`${data.length} images · ${albums.length} albums`}
+//         onAdd={openAdd}
+//         addLabel="+ Add Image"
+//       />
+
+//       {/* Category Filter Pills */}
 //       <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
 //         {categories.map(c => (
 //           <button key={c} onClick={() => setFilterCat(c)} style={{
@@ -1018,17 +1343,23 @@
 //           }}>{c}</button>
 //         ))}
 //       </div>
+
+//       {/* Grid */}
 //       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 16 }}>
 //         {filtered.map(g => (
 //           <div key={g.id} className="card" style={{ overflow: "hidden" }}>
-//             <div onClick={() => setLightbox(g)} style={{ height: 150, backgroundImage: `url('${g.url}')`, backgroundSize: "cover", backgroundPosition: "center", cursor: "zoom-in", position: "relative" }}>
-//               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0)", transition: "background 0.2s" }} className="gallery-hover" />
+//             <div
+//               onClick={() => setLightbox(g)}
+//               style={{ height: 150, backgroundImage: `url('${g.url}')`, backgroundSize: "cover", backgroundPosition: "center", cursor: "zoom-in", position: "relative" }}
+//             >
+//               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0)", transition: "background 0.2s" }} />
 //             </div>
 //             <div style={{ padding: "14px 16px" }}>
 //               <div style={{ fontSize: 13, fontWeight: 600, color: "var(--cream)", marginBottom: 2 }}>{g.caption}</div>
-//               <div style={{ fontSize: 11, color: "var(--gold)", letterSpacing: 1, textTransform: "uppercase", marginBottom: g.album ? 2 : 10 }}>{g.category}</div>
+//               <div style={{ fontSize: 11, color: "var(--gold)", letterSpacing: 1, textTransform: "uppercase", marginBottom: 2 }}>{g.category}</div>
+//               {g.year  && <div style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 2 }}>📅 {g.year}</div>}
 //               {g.album && <div style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 10 }}>📁 {g.album}</div>}
-//               <div>
+//               <div style={{ marginTop: 8 }}>
 //                 <ActionBtn label="Edit" onClick={() => openEdit(g)} />
 //                 <ActionBtn label="Delete" color="#f87171" onClick={() => del(g.id)} />
 //               </div>
@@ -1039,22 +1370,30 @@
 
 //       {/* Lightbox */}
 //       {lightbox && (
-//         <div style={{ position: "fixed", inset: 0, zIndex: 99999, background: "rgba(0,0,0,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }} onClick={() => setLightbox(null)}>
+//         <div
+//           style={{ position: "fixed", inset: 0, zIndex: 99999, background: "rgba(0,0,0,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+//           onClick={() => setLightbox(null)}
+//         >
 //           <div style={{ textAlign: "center" }} onClick={e => e.stopPropagation()}>
 //             <img src={lightbox.url} alt={lightbox.caption} style={{ maxWidth: "80vw", maxHeight: "70vh", borderRadius: 12, boxShadow: "0 20px 60px rgba(0,0,0,0.8)" }} />
 //             <div style={{ fontSize: 15, color: "var(--cream)", marginTop: 16 }}>{lightbox.caption}</div>
-//             <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 4 }}>{lightbox.album} · {lightbox.category}</div>
-//             <button onClick={() => setLightbox(null)} style={{ marginTop: 16, background: "rgba(255,255,255,0.1)", border: "none", color: "var(--text-muted)", padding: "8px 20px", borderRadius: 8, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>Close</button>
+//             <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 4 }}>{lightbox.category} · {lightbox.year} {lightbox.album ? `· 📁 ${lightbox.album}` : ""}</div>
+//             <button
+//               onClick={() => setLightbox(null)}
+//               style={{ marginTop: 16, background: "rgba(255,255,255,0.1)", border: "none", color: "var(--text-muted)", padding: "8px 20px", borderRadius: 8, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}
+//             >Close</button>
 //           </div>
 //         </div>
 //       )}
 
+//       {/* Add / Edit Modal */}
 //       {modal && (
 //         <Modal title={modal.mode === "add" ? "Add Image" : "Edit Image"} onClose={() => setModal(null)}>
-//           <Field label="Caption"     name="caption"  value={form.caption}  onChange={handle} />
-//           <Field label="Image URL"   name="url"      value={form.url}      onChange={handle} />
-//           <Field label="Category"    name="category" value={form.category} onChange={handle} options={["Event", "Academic", "Sports", "Campus", "Cultural", "Other"]} />
-//           <Field label="Album Name"  name="album"    value={form.album}    onChange={handle} placeholder="e.g. Convocation 2024" />
+//           <Field label="Caption"    name="caption"  value={form.caption}  onChange={handle} />
+//           <Field label="Image URL"  name="url"      value={form.url}      onChange={handle} />
+//           <Field label="Category"   name="category" value={form.category} onChange={handle} options={["Events","Academic","Sports","Campus","Cultural","Other"]} />
+//           <Field label="Year"       name="year"     value={form.year}     onChange={handle} options={["2025","2024","2023","2022","2021","2020"]} />
+//           <Field label="Album Name" name="album"    value={form.album}    onChange={handle} placeholder="e.g. Convocation 2024" />
 //           {form.url && (
 //             <div style={{ marginBottom: 16, borderRadius: 8, overflow: "hidden", height: 140, backgroundImage: `url('${form.url}')`, backgroundSize: "cover", backgroundPosition: "center", border: "1px solid rgba(201,168,76,0.2)" }} />
 //           )}
@@ -1067,6 +1406,21 @@
 //   )
 // }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 // /* ── Fees ── */
 // function Fees({ data, setData, students, courses }) {
 //   const empty = { student: "", course: "", amount: "", paid: "0", date: new Date().toISOString().split("T")[0], status: "Pending", method: "Cash", txnId: "", remarks: "" }
@@ -1176,204 +1530,520 @@
 //   )
 // }
 
-// /* ── Website Settings (Fully Editable & Applied) ── */
-// const DEFAULT_SITE_DATA = DEFAULT_SITE
-// function SiteSettings({ data, setData }) {
-//   const [form, setForm] = useState({ ...data })
-//   const [saved, setSaved] = useState(false)
-//   const [activeTab, setTab] = useState("home")
-//   const handle = e => setForm({ ...form, [e.target.name]: e.target.value })
-//   const submit = () => {
-//     setData(form); save("siteSettings", form)
-//     setSaved(true); setTimeout(() => setSaved(false), 3000)
-//   }
-//   const reset = () => {
-//     if (!confirm("Reset all settings to default?")) return
-//     setData(DEFAULT_SITE_DATA); setForm({ ...DEFAULT_SITE_DATA }); save("siteSettings", DEFAULT_SITE_DATA)
-//   }
-//   const tabs = [
-//     { key: "home",    label: "🏠 Home"       },
-//     { key: "about",   label: "ℹ️ About"      },
-//     { key: "contact", label: "📞 Contact"    },
-//     { key: "general", label: "⚙️ General"    },
-//     { key: "features",label: "✨ Features"   },
-//     { key: "social",  label: "🔗 Social"     },
-//     { key: "images",  label: "🖼️ Images"    },
-//     { key: "seo",     label: "🔍 SEO"        },
-//   ]
-//   const TA = ({ label, name, rows = 3 }) => (
-//     <div style={{ marginBottom: 16 }}>
-//       <label style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", marginBottom: 6 }}>{label}</label>
-//       <textarea name={name} value={form[name] || ""} onChange={handle} rows={rows}
-//         style={{ width: "100%", padding: "11px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "var(--text)", fontFamily: "'DM Sans',sans-serif", fontSize: 14, outline: "none", resize: "vertical", boxSizing: "border-box" }} />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // const DEFAULT_SITE_DATA = DEFAULT_SITE
+// // function SiteSettings({ data, setData }) {
+// //   const [form, setForm] = useState({ ...data })
+// //   const [saved, setSaved] = useState(false)
+// //   const [activeTab, setTab] = useState("home")
+// //   const handle = e => setForm({ ...form, [e.target.name]: e.target.value })
+// //   const submit = () => {
+// //     setData(form); save("siteSettings", form)
+// //     setSaved(true); setTimeout(() => setSaved(false), 3000)
+// //   }
+
+// // const saveAll = () => {
+// //     setData(form);
+// //     save("siteSettings", form);        // localStorage mein save
+// //     alert("✅ Changes Saved! Refresh the Home Page to see updates.");
+// // };
+
+
+
+// //   const reset = () => {
+// //     if (!confirm("Reset all settings to default?")) return
+// //     setData(DEFAULT_SITE_DATA); setForm({ ...DEFAULT_SITE_DATA }); save("siteSettings", DEFAULT_SITE_DATA)
+// //   }
+// //   const tabs = [
+// //     { key: "home",    label: "🏠 Home"       },
+// //     { key: "about",   label: "ℹ️ About"      },
+// //     { key: "contact", label: "📞 Contact"    },
+// //     { key: "general", label: "⚙️ General"    },
+// //     { key: "features",label: "✨ Features"   },
+// //     { key: "social",  label: "🔗 Social"     },
+// //     { key: "images",  label: "🖼️ Images"    },
+// //     { key: "seo",     label: "🔍 SEO"        },
+// //   ]
+// //   const TA = ({ label, name, rows = 3 }) => (
+// //     <div style={{ marginBottom: 16 }}>
+// //       <label style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", marginBottom: 6 }}>{label}</label>
+// //       <textarea name={name} value={form[name] || ""} onChange={handle} rows={rows}
+// //         style={{ width: "100%", padding: "11px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "var(--text)", fontFamily: "'DM Sans',sans-serif", fontSize: 14, outline: "none", resize: "vertical", boxSizing: "border-box" }} />
+// //     </div>
+// //   )
+// //   const IN = ({ label, name, placeholder }) => <Field label={label} name={name} value={form[name] || ""} onChange={handle} placeholder={placeholder} />
+// //   return (
+// //     <>
+// //       <SectionHeader title="Website Settings" subtitle="Edit all public website content — changes apply instantly on save" />
+// //       {saved && (
+// //         <div style={{ background: "rgba(74,222,128,0.12)", border: "1px solid rgba(74,222,128,0.3)", borderRadius: 8, padding: "12px 18px", marginBottom: 20, color: "#4ade80", fontSize: 14 }}>
+// //           ✅ All changes saved! Reload the public website to see updates.
+// //         </div>
+// //       )}
+// //       <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>
+// //         {tabs.map(t => (
+// //           <button key={t.key} onClick={() => setTab(t.key)} style={{
+// //             padding: "8px 16px", borderRadius: 100, fontSize: 12, fontWeight: 600, cursor: "pointer",
+// //             background: activeTab === t.key ? "var(--gold)" : "rgba(255,255,255,0.05)",
+// //             color: activeTab === t.key ? "var(--dark)" : "var(--text-muted)",
+// //             border: "1px solid " + (activeTab === t.key ? "var(--gold)" : "rgba(255,255,255,0.1)"),
+// //             fontFamily: "'DM Sans',sans-serif", transition: "all 0.2s",
+// //           }}>{t.label}</button>
+// //         ))}
+// //       </div>
+// //       <div className="card" style={{ padding: 32 }}>
+// //         {activeTab === "home" && (
+// //           <>
+// //             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>🏠 Home Page Content</div>
+// //             <IN label="Admission Badge Text"  name="heroBadge"  placeholder="e.g. Now Enrolling for 2025–26" />
+// //             <IN label="Main Hero Heading"     name="tagline"    />
+// //             <TA label="Hero Description"      name="heroDesc"   />
+// //             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+// //               <IN label="Admission Status (true/false)" name="admissionOpen" />
+// //               <IN label="Admission Banner Message" name="admissionMsg" />
+// //             </div>
+// //             <IN label="CTA Section Badge"     name="ctaBadge"    />
+// //             <IN label="CTA Section Title"     name="ctaTitle"    />
+// //             <TA label="CTA Section Subtitle"  name="ctaSubtitle" rows={2} />
+// //             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+// //               <IN label="CTA Button 1 Text"   name="ctaBtn1" />
+// //               <IN label="CTA Button 2 Text"   name="ctaBtn2" />
+// //             </div>
+// //             <div style={{ fontSize: 14, fontWeight: 600, color: "var(--cream)", margin: "20px 0 16px" }}>📊 Stats Bar</div>
+// //             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+// //               <IN label="Stat 1 Value" name="stat1Val" />
+// //               <IN label="Stat 1 Label" name="stat1Label" />
+// //               <IN label="Stat 2 Value" name="stat2Val" />
+// //               <IN label="Stat 2 Label" name="stat2Label" />
+// //               <IN label="Stat 3 Value" name="stat3Val" />
+// //               <IN label="Stat 3 Label" name="stat3Label" />
+// //               <IN label="Stat 4 Value" name="stat4Val" />
+// //               <IN label="Stat 4 Label" name="stat4Label" />
+// //             </div>
+// //           </>
+// //         )}
+// //         {activeTab === "about" && (
+// //           <>
+// //             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>ℹ️ About Page</div>
+// //             <IN label="Section Heading"      name="aboutTitle" />
+// //             <TA label="First Paragraph"      name="aboutDesc1" rows={3} />
+// //             <TA label="Second Paragraph"     name="aboutDesc2" rows={3} />
+// //             <TA label="Mission Statement"    name="aboutMission" rows={2} />
+// //             <TA label="Vision Statement"     name="aboutVision"  rows={2} />
+// //           </>
+// //         )}
+// //         {activeTab === "features" && (
+// //           <>
+// //             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>✨ Why Choose Us (Features Section)</div>
+// //             {[1, 2, 3, 4].map(n => (
+// //               <div key={n} style={{ marginBottom: 20, padding: "16px 20px", background: "rgba(255,255,255,0.03)", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
+// //                 <div style={{ fontSize: 13, fontWeight: 700, color: "var(--gold)", marginBottom: 12 }}>Feature {n}</div>
+// //                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+// //                   <IN label={`Title`}       name={`feat${n}Title`} />
+// //                   <IN label={`Description`} name={`feat${n}Desc`}  />
+// //                 </div>
+// //               </div>
+// //             ))}
+// //           </>
+// //         )}
+// //         {activeTab === "contact" && (
+// //           <>
+// //             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>📞 Contact Details</div>
+// //             <TA label="Full Address" name="address" rows={2} />
+// //             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+// //               <IN label="Primary Phone"  name="phone"  />
+// //               <IN label="Secondary Phone" name="phone2" />
+// //               <IN label="Primary Email"  name="email"  />
+// //               <IN label="Secondary Email" name="email2" />
+// //             </div>
+// //             <IN label="Office Hours"   name="hours"   />
+// //             <IN label="WhatsApp Number (digits only)" name="whatsapp" placeholder="e.g. 9876543210" />
+// //             <TA label="Google Maps Embed URL" name="mapEmbed" rows={2} />
+// //           </>
+// //         )}
+// //         {activeTab === "general" && (
+// //           <>
+// //             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>⚙️ General Branding</div>
+// //             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+// //               <IN label="School / Brand Name" name="schoolName"  />
+// //               <IN label="Logo Text"           name="logoText"    />
+// //             </div>
+// //             <IN label="Logo Tagline"          name="logoTagline" />
+// //             <TA label="Footer Description"    name="footerDesc"  rows={2} />
+// //             <IN label="Footer Copyright Text" name="footerCopyright" />
+// //             <div style={{ fontSize: 14, fontWeight: 600, color: "var(--cream)", margin: "20px 0 16px" }}>🔐 Login Page</div>
+// //             <IN label="Login Page Title"    name="loginTitle"    />
+// //             <IN label="Login Page Subtitle" name="loginSubtitle" />
+// //             <TA label="Inspirational Quote" name="loginQuote"    rows={2} />
+// //             <IN label="Quote Author"        name="loginAuthor"   />
+// //           </>
+// //         )}
+// //         {activeTab === "social" && (
+// //           <>
+// //             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>🔗 Social Media Links</div>
+// //             <IN label="Facebook URL"  name="socialFacebook"  placeholder="https://facebook.com/yourpage" />
+// //             <IN label="Instagram URL" name="socialInstagram" placeholder="https://instagram.com/yourpage" />
+// //             <IN label="YouTube URL"   name="socialYoutube"   placeholder="https://youtube.com/yourchannel" />
+// //             <IN label="Twitter / X URL" name="socialTwitter" placeholder="https://twitter.com/yourhandle" />
+// //           </>
+// //         )}
+// //         {activeTab === "images" && (
+// //           <>
+// //             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 8 }}>🖼️ Page Images & Backgrounds</div>
+// //             <p style={{ fontSize: 13, color: "var(--text-muted)", marginBottom: 20, lineHeight: 1.6 }}>Paste any public image URL (Unsplash, Google Drive public link, Cloudinary, etc.)</p>
+// //             {[
+// //               { label: "Hero Background Image", name: "heroImage"  },
+// //               { label: "About Page Image",       name: "aboutImage" },
+// //               { label: "Login Page Background",  name: "loginBg"   },
+// //             ].map(({ label, name }) => (
+// //               <div key={name} style={{ marginBottom: 24 }}>
+// //                 <IN label={label} name={name} />
+// //                 {form[name] && (
+// //                   <div style={{ height: 120, borderRadius: 8, backgroundImage: `url('${form[name]}')`, backgroundSize: "cover", backgroundPosition: "center", border: "1px solid rgba(201,168,76,0.2)", marginTop: 8 }} />
+// //                 )}
+// //               </div>
+// //             ))}
+// //           </>
+// //         )}
+// //         {activeTab === "seo" && (
+// //           <>
+// //             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>🔍 SEO & Meta Settings</div>
+// //             <IN label="Page Title (for browser tab)" name="metaTitle" placeholder="EduSphere – Shape Your Future" />
+// //             <TA label="Meta Description (for Google)"  name="metaDesc"  rows={3} />
+// //             <div style={{ padding: "12px 16px", background: "rgba(96,165,250,0.08)", borderRadius: 8, border: "1px solid rgba(96,165,250,0.2)", fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7 }}>
+// //               ℹ️ These values are read by the website frontend to set <code style={{ color: "#60a5fa" }}>&lt;title&gt;</code> and <code style={{ color: "#60a5fa" }}>&lt;meta name="description"&gt;</code>. Make sure your website reads from <code style={{ color: "#60a5fa" }}>localStorage("siteSettings")</code>.
+// //             </div>
+// //           </>
+// //         )}
+
+// //         <div style={{ display: "flex", gap: 12, marginTop: 28, flexWrap: "wrap" }}>
+// //           <button className="btn-primary" style={{ flex: 1, justifyContent: "center" }} onClick={submit}>💾 Save All Changes</button>
+// //           <button className="btn-outline" style={{ justifyContent: "center" }} onClick={reset}>↺ Reset to Default</button>
+// //         </div>
+// //       </div>
+
+// //       {/* Live Preview snippet */}
+// //       <div className="card" style={{ padding: 24, marginTop: 20 }}>
+// //         <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 16, color: "var(--cream)", marginBottom: 12 }}>👁️ Live Preview — Current Values</div>
+// //         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 10 }}>
+// //           {[
+// //             { label: "School Name", val: form.schoolName },
+// //             { label: "Tagline",     val: form.tagline },
+// //             { label: "Admission",   val: form.admissionOpen === "true" ? "🟢 Open" : "🔴 Closed" },
+// //             { label: "Phone",       val: form.phone },
+// //             { label: "Email",       val: form.email },
+// //             { label: "Address",     val: form.address },
+// //           ].map((r, i) => (
+// //             <div key={i} style={{ fontSize: 13, padding: "10px 14px", background: "rgba(255,255,255,0.03)", borderRadius: 8 }}>
+// //               <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.5 }}>{r.label}: </span>
+// //               <span style={{ color: "var(--text-muted)" }}>{r.val || "—"}</span>
+// //             </div>
+// //           ))}
+// //         </div>
+// //       </div>
+// //     </>
+// //   )
+// // }
+
+
+
+
+
+
+
+// const SS_TABS = [
+//   { key:"hero",label:"🏠 Hero"},{ key:"counters",label:"🔢 Counters"},
+//   { key:"features",label:"✨ Features"},{ key:"achievements",label:"🏆 Achievements"},
+//   { key:"testimonials",label:"💬 Testimonials"},{ key:"team",label:"👨‍🏫 Team"},
+//   { key:"events",label:"📅 Events"},{ key:"faq",label:"❓ FAQ"},
+//   { key:"partners",label:"🤝 Partners"},{ key:"video",label:"🎬 Video"},
+//   { key:"newsletter",label:"📬 Newsletter"},{ key:"cta",label:"📣 CTA Banner"},
+//   { key:"about",label:"ℹ️ About"},{ key:"contact",label:"📞 Contact"},
+//   { key:"general",label:"⚙️ General"},{ key:"social",label:"🔗 Social"},
+//   { key:"images",label:"🖼️ Images"},{ key:"seo",label:"🔍 SEO"},
+// ]
+// function SSField({ label, name, value, onChange, placeholder }) {
+//   return (
+//     <div style={{ marginBottom:16 }}>
+//       <label style={{ display:"block", fontSize:11, fontWeight:700, letterSpacing:1, textTransform:"uppercase", color:"var(--gold)", marginBottom:6 }}>{label}</label>
+//       <input name={name} value={value} onChange={onChange} placeholder={placeholder||""}
+//         style={{ width:"100%", padding:"11px 14px", background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:8, color:"var(--text)", fontFamily:"'DM Sans',sans-serif", fontSize:14, outline:"none", boxSizing:"border-box" }} />
 //     </div>
 //   )
-//   const IN = ({ label, name, placeholder }) => <Field label={label} name={name} value={form[name] || ""} onChange={handle} placeholder={placeholder} />
+// }
+// function SSTA({ label, name, value, onChange, rows=3 }) {
+//   return (
+//     <div style={{ marginBottom:16 }}>
+//       <label style={{ display:"block", fontSize:11, fontWeight:700, letterSpacing:1, textTransform:"uppercase", color:"var(--gold)", marginBottom:6 }}>{label}</label>
+//       <textarea name={name} value={value||""} onChange={onChange} rows={rows}
+//         style={{ width:"100%", padding:"11px 14px", background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:8, color:"var(--text)", fontFamily:"'DM Sans',sans-serif", fontSize:14, outline:"none", resize:"vertical", boxSizing:"border-box" }} />
+//     </div>
+//   )
+// }
+// function SSCard({ children }) {
+//   return <div style={{ marginBottom:20, padding:"16px 20px", background:"rgba(255,255,255,0.03)", borderRadius:10, border:"1px solid rgba(255,255,255,0.06)" }}>{children}</div>
+// }
+// function SSHead({ children }) {
+//   return <div style={{ fontSize:14, fontWeight:700, color:"var(--cream)", margin:"24px 0 16px", paddingBottom:8, borderBottom:"1px solid rgba(255,255,255,0.06)" }}>{children}</div>
+// }
+// function SiteSettings({ data, setData, save, DEFAULT_SITE_DATA, SectionHeader }) {
+//   const [form, setForm] = useState({ ...data })
+//   const [saved, setSaved] = useState(false)
+//   const [tab, setTab] = useState("hero")
+//   const h = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+//   const IN = ({ label, name, placeholder }) => <SSField label={label} name={name} value={form[name]||""} onChange={h} placeholder={placeholder} />
+//   const TA = ({ label, name, rows }) => <SSTA label={label} name={name} value={form[name]||""} onChange={h} rows={rows} />
+//   const Two = ({ children }) => <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0 16px" }}>{children}</div>
+//   const submit = () => { setData(form); save("siteSettings", form); setSaved(true); setTimeout(()=>setSaved(false),3000) }
+//   const reset = () => { if(!confirm("Reset all settings to default?"))return; setData(DEFAULT_SITE_DATA); setForm({...DEFAULT_SITE_DATA}); save("siteSettings",DEFAULT_SITE_DATA) }
 //   return (
 //     <>
-//       <SectionHeader title="Website Settings" subtitle="Edit all public website content — changes apply instantly on save" />
-//       {saved && (
-//         <div style={{ background: "rgba(74,222,128,0.12)", border: "1px solid rgba(74,222,128,0.3)", borderRadius: 8, padding: "12px 18px", marginBottom: 20, color: "#4ade80", fontSize: 14 }}>
-//           ✅ All changes saved! Reload the public website to see updates.
-//         </div>
-//       )}
-//       <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>
-//         {tabs.map(t => (
-//           <button key={t.key} onClick={() => setTab(t.key)} style={{
-//             padding: "8px 16px", borderRadius: 100, fontSize: 12, fontWeight: 600, cursor: "pointer",
-//             background: activeTab === t.key ? "var(--gold)" : "rgba(255,255,255,0.05)",
-//             color: activeTab === t.key ? "var(--dark)" : "var(--text-muted)",
-//             border: "1px solid " + (activeTab === t.key ? "var(--gold)" : "rgba(255,255,255,0.1)"),
-//             fontFamily: "'DM Sans',sans-serif", transition: "all 0.2s",
-//           }}>{t.label}</button>
+//       <SectionHeader title="Website Settings" subtitle="Edit all public website content — save to apply on Home page" />
+//       {saved && <div style={{ background:"rgba(74,222,128,0.12)", border:"1px solid rgba(74,222,128,0.3)", borderRadius:8, padding:"12px 18px", marginBottom:20, color:"#4ade80", fontSize:14 }}>✅ All changes saved! Reload the public website to see updates.</div>}
+//       <div style={{ display:"flex", gap:6, marginBottom:28, flexWrap:"wrap" }}>
+//         {SS_TABS.map(t => (
+//           <button key={t.key} onClick={()=>setTab(t.key)} style={{ padding:"8px 14px", borderRadius:100, fontSize:12, fontWeight:600, cursor:"pointer", background:tab===t.key?"var(--gold)":"rgba(255,255,255,0.05)", color:tab===t.key?"var(--dark)":"var(--text-muted)", border:"1px solid "+(tab===t.key?"var(--gold)":"rgba(255,255,255,0.1)"), fontFamily:"'DM Sans',sans-serif", transition:"all 0.2s" }}>{t.label}</button>
 //         ))}
 //       </div>
-//       <div className="card" style={{ padding: 32 }}>
-//         {activeTab === "home" && (
-//           <>
-//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>🏠 Home Page Content</div>
-//             <IN label="Admission Badge Text"  name="heroBadge"  placeholder="e.g. Now Enrolling for 2025–26" />
-//             <IN label="Main Hero Heading"     name="tagline"    />
-//             <TA label="Hero Description"      name="heroDesc"   />
-//             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-//               <IN label="Admission Status (true/false)" name="admissionOpen" />
-//               <IN label="Admission Banner Message" name="admissionMsg" />
-//             </div>
-//             <IN label="CTA Section Badge"     name="ctaBadge"    />
-//             <IN label="CTA Section Title"     name="ctaTitle"    />
-//             <TA label="CTA Section Subtitle"  name="ctaSubtitle" rows={2} />
-//             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-//               <IN label="CTA Button 1 Text"   name="ctaBtn1" />
-//               <IN label="CTA Button 2 Text"   name="ctaBtn2" />
-//             </div>
-//             <div style={{ fontSize: 14, fontWeight: 600, color: "var(--cream)", margin: "20px 0 16px" }}>📊 Stats Bar</div>
-//             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-//               <IN label="Stat 1 Value" name="stat1Val" />
-//               <IN label="Stat 1 Label" name="stat1Label" />
-//               <IN label="Stat 2 Value" name="stat2Val" />
-//               <IN label="Stat 2 Label" name="stat2Label" />
-//               <IN label="Stat 3 Value" name="stat3Val" />
-//               <IN label="Stat 3 Label" name="stat3Label" />
-//               <IN label="Stat 4 Value" name="stat4Val" />
-//               <IN label="Stat 4 Label" name="stat4Label" />
-//             </div>
-//           </>
-//         )}
-//         {activeTab === "about" && (
-//           <>
-//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>ℹ️ About Page</div>
-//             <IN label="Section Heading"      name="aboutTitle" />
-//             <TA label="First Paragraph"      name="aboutDesc1" rows={3} />
-//             <TA label="Second Paragraph"     name="aboutDesc2" rows={3} />
-//             <TA label="Mission Statement"    name="aboutMission" rows={2} />
-//             <TA label="Vision Statement"     name="aboutVision"  rows={2} />
-//           </>
-//         )}
-//         {activeTab === "features" && (
-//           <>
-//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>✨ Why Choose Us (Features Section)</div>
-//             {[1, 2, 3, 4].map(n => (
-//               <div key={n} style={{ marginBottom: 20, padding: "16px 20px", background: "rgba(255,255,255,0.03)", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
-//                 <div style={{ fontSize: 13, fontWeight: 700, color: "var(--gold)", marginBottom: 12 }}>Feature {n}</div>
-//                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-//                   <IN label={`Title`}       name={`feat${n}Title`} />
-//                   <IN label={`Description`} name={`feat${n}Desc`}  />
-//                 </div>
+//       <div className="card" style={{ padding:32 }}>
+//         {tab==="hero" && (<>
+//           <SSHead>🏠 Hero Section</SSHead>
+//           <IN label="Admission Badge Text" name="heroBadge" placeholder="Now Enrolling for 2025–26" />
+//           <IN label="Hero Heading (before 'Future')" name="tagline" placeholder="Shape Your" />
+//           <TA label="Hero Description" name="heroDesc" rows={3} />
+//           <Two><IN label="Admission Open? (true/false)" name="admissionOpen" /><IN label="Admission Banner Message" name="admissionMsg" /></Two>
+//           <SSHead>📊 Stats Bar</SSHead>
+//           <Two>
+//             <IN label="Stat 1 Value" name="stat1Val" /><IN label="Stat 1 Label" name="stat1Label" />
+//             <IN label="Stat 2 Value" name="stat2Val" /><IN label="Stat 2 Label" name="stat2Label" />
+//             <IN label="Stat 3 Value" name="stat3Val" /><IN label="Stat 3 Label" name="stat3Label" />
+//             <IN label="Stat 4 Value" name="stat4Val" /><IN label="Stat 4 Label" name="stat4Label" />
+//           </Two>
+//         </>)}
+//         {tab==="counters" && (<>
+//           <SSHead>🔢 Animated Counter Stats (6)</SSHead>
+//           {[1,2,3,4,5,6].map(n=>(
+//             <SSCard key={n}>
+//               <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>Counter {n}</div>
+//               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:"0 12px" }}>
+//                 <IN label="End Number" name={`counter${n}End`} placeholder="5000" />
+//                 <IN label="Suffix" name={`counter${n}Suffix`} placeholder="+" />
+//                 <IN label="Icon" name={`counter${n}Icon`} placeholder="🎓" />
+//                 <IN label="Label" name={`counter${n}Label`} placeholder="Students Enrolled" />
 //               </div>
-//             ))}
-//           </>
-//         )}
-//         {activeTab === "contact" && (
-//           <>
-//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>📞 Contact Details</div>
-//             <TA label="Full Address" name="address" rows={2} />
-//             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-//               <IN label="Primary Phone"  name="phone"  />
-//               <IN label="Secondary Phone" name="phone2" />
-//               <IN label="Primary Email"  name="email"  />
-//               <IN label="Secondary Email" name="email2" />
-//             </div>
-//             <IN label="Office Hours"   name="hours"   />
-//             <IN label="WhatsApp Number (digits only)" name="whatsapp" placeholder="e.g. 9876543210" />
-//             <TA label="Google Maps Embed URL" name="mapEmbed" rows={2} />
-//           </>
-//         )}
-//         {activeTab === "general" && (
-//           <>
-//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>⚙️ General Branding</div>
-//             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-//               <IN label="School / Brand Name" name="schoolName"  />
-//               <IN label="Logo Text"           name="logoText"    />
-//             </div>
-//             <IN label="Logo Tagline"          name="logoTagline" />
-//             <TA label="Footer Description"    name="footerDesc"  rows={2} />
-//             <IN label="Footer Copyright Text" name="footerCopyright" />
-//             <div style={{ fontSize: 14, fontWeight: 600, color: "var(--cream)", margin: "20px 0 16px" }}>🔐 Login Page</div>
-//             <IN label="Login Page Title"    name="loginTitle"    />
-//             <IN label="Login Page Subtitle" name="loginSubtitle" />
-//             <TA label="Inspirational Quote" name="loginQuote"    rows={2} />
-//             <IN label="Quote Author"        name="loginAuthor"   />
-//           </>
-//         )}
-//         {activeTab === "social" && (
-//           <>
-//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>🔗 Social Media Links</div>
-//             <IN label="Facebook URL"  name="socialFacebook"  placeholder="https://facebook.com/yourpage" />
-//             <IN label="Instagram URL" name="socialInstagram" placeholder="https://instagram.com/yourpage" />
-//             <IN label="YouTube URL"   name="socialYoutube"   placeholder="https://youtube.com/yourchannel" />
-//             <IN label="Twitter / X URL" name="socialTwitter" placeholder="https://twitter.com/yourhandle" />
-//           </>
-//         )}
-//         {activeTab === "images" && (
-//           <>
-//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 8 }}>🖼️ Page Images & Backgrounds</div>
-//             <p style={{ fontSize: 13, color: "var(--text-muted)", marginBottom: 20, lineHeight: 1.6 }}>Paste any public image URL (Unsplash, Google Drive public link, Cloudinary, etc.)</p>
-//             {[
-//               { label: "Hero Background Image", name: "heroImage"  },
-//               { label: "About Page Image",       name: "aboutImage" },
-//               { label: "Login Page Background",  name: "loginBg"   },
-//             ].map(({ label, name }) => (
-//               <div key={name} style={{ marginBottom: 24 }}>
-//                 <IN label={label} name={name} />
-//                 {form[name] && (
-//                   <div style={{ height: 120, borderRadius: 8, backgroundImage: `url('${form[name]}')`, backgroundSize: "cover", backgroundPosition: "center", border: "1px solid rgba(201,168,76,0.2)", marginTop: 8 }} />
-//                 )}
+//             </SSCard>
+//           ))}
+//         </>)}
+//         {tab==="features" && (<>
+//           <SSHead>✨ Feature Cards (6)</SSHead>
+//           {[1,2,3,4,5,6].map(n=>(
+//             <SSCard key={n}>
+//               <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>Feature {n}</div>
+//               <div style={{ display:"grid", gridTemplateColumns:"80px 1fr 2fr", gap:"0 12px" }}>
+//                 <IN label="Icon" name={`feat${n}Icon`} placeholder="🎓" />
+//                 <IN label="Title" name={`feat${n}Title`} placeholder="Expert Faculty" />
+//                 <IN label="Description" name={`feat${n}Desc`} placeholder="Short description..." />
 //               </div>
-//             ))}
-//           </>
-//         )}
-//         {activeTab === "seo" && (
-//           <>
-//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>🔍 SEO & Meta Settings</div>
-//             <IN label="Page Title (for browser tab)" name="metaTitle" placeholder="EduSphere – Shape Your Future" />
-//             <TA label="Meta Description (for Google)"  name="metaDesc"  rows={3} />
-//             <div style={{ padding: "12px 16px", background: "rgba(96,165,250,0.08)", borderRadius: 8, border: "1px solid rgba(96,165,250,0.2)", fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7 }}>
-//               ℹ️ These values are read by the website frontend to set <code style={{ color: "#60a5fa" }}>&lt;title&gt;</code> and <code style={{ color: "#60a5fa" }}>&lt;meta name="description"&gt;</code>. Make sure your website reads from <code style={{ color: "#60a5fa" }}>localStorage("siteSettings")</code>.
+//             </SSCard>
+//           ))}
+//         </>)}
+//         {tab==="achievements" && (<>
+//           <SSHead>🏆 Achievements (4)</SSHead>
+//           {[1,2,3,4].map(n=>(
+//             <SSCard key={n}>
+//               <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>Achievement {n}</div>
+//               <div style={{ display:"grid", gridTemplateColumns:"80px 80px 1fr", gap:"0 12px" }}>
+//                 <IN label="Icon" name={`ach${n}Icon`} placeholder="🥇" />
+//                 <IN label="Year" name={`ach${n}Year`} placeholder="2024" />
+//                 <IN label="Title" name={`ach${n}Title`} placeholder="Best Institution" />
+//               </div>
+//               <TA label="Description" name={`ach${n}Body`} rows={2} />
+//             </SSCard>
+//           ))}
+//         </>)}
+//         {tab==="testimonials" && (<>
+//           <SSHead>💬 Testimonials (6)</SSHead>
+//           {[1,2,3,4,5,6].map(n=>(
+//             <SSCard key={n}>
+//               <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>Testimonial {n}</div>
+//               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 60px", gap:"0 12px" }}>
+//                 <IN label="Name" name={`test${n}Name`} placeholder="Priya Sharma" />
+//                 <IN label="Role" name={`test${n}Role`} placeholder="JEE Qualifier, IIT Delhi" />
+//                 <IN label="Avatar (initial)" name={`test${n}Avatar`} placeholder="P" />
+//               </div>
+//               <TA label="Testimonial Text" name={`test${n}Text`} rows={3} />
+//             </SSCard>
+//           ))}
+//         </>)}
+//         {tab==="team" && (<>
+//           <SSHead>👨‍🏫 Team Members (6)</SSHead>
+//           {[1,2,3,4,5,6].map(n=>(
+//             <SSCard key={n}>
+//               <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>Member {n}</div>
+//               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0 12px" }}>
+//                 <IN label="Full Name" name={`team${n}Name`} placeholder="Dr. Rajesh Kumar" />
+//                 <IN label="Role" name={`team${n}Role`} placeholder="Principal & Founder" />
+//                 <IN label="Subject" name={`team${n}Subject`} placeholder="Physics" />
+//                 <IN label="Experience" name={`team${n}Exp`} placeholder="30+ yrs" />
+//               </div>
+//               <IN label="Avatar Initial" name={`team${n}Avatar`} placeholder="R" />
+//             </SSCard>
+//           ))}
+//         </>)}
+//         {tab==="events" && (<>
+//           <SSHead>📅 Events (6)</SSHead>
+//           {[1,2,3,4,5,6].map(n=>(
+//             <SSCard key={n}>
+//               <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>Event {n}</div>
+//               <div style={{ display:"grid", gridTemplateColumns:"60px 60px 1fr", gap:"0 12px" }}>
+//                 <IN label="Date" name={`ev${n}Date`} placeholder="15" />
+//                 <IN label="Month" name={`ev${n}Month`} placeholder="Jan" />
+//                 <IN label="Title" name={`ev${n}Title`} placeholder="Science Exhibition" />
+//               </div>
+//               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"0 12px" }}>
+//                 <IN label="Time" name={`ev${n}Time`} placeholder="10:00 AM" />
+//                 <IN label="Venue" name={`ev${n}Venue`} placeholder="Main Hall" />
+//                 <IN label="Category" name={`ev${n}Cat`} placeholder="Academic" />
+//               </div>
+//             </SSCard>
+//           ))}
+//         </>)}
+//         {tab==="faq" && (<>
+//           <SSHead>❓ FAQ (6)</SSHead>
+//           {[1,2,3,4,5,6].map(n=>(
+//             <SSCard key={n}>
+//               <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>FAQ {n}</div>
+//               <IN label="Question" name={`faq${n}Q`} placeholder="What courses does EduSphere offer?" />
+//               <TA label="Answer" name={`faq${n}A`} rows={3} />
+//             </SSCard>
+//           ))}
+//         </>)}
+//         {tab==="partners" && (<>
+//           <SSHead>🤝 Partners & Affiliates</SSHead>
+//           <p style={{ fontSize:13, color:"var(--text-muted)", marginBottom:16, lineHeight:1.6 }}>Enter partner names separated by commas. These scroll in the marquee strip.</p>
+//           <SSTA label="Partner Names (comma-separated)" name="partners" value={form.partners||""} onChange={h} rows={4} />
+//           <div style={{ fontSize:12, color:"var(--text-muted)", marginTop:8 }}>Example: <em style={{ color:"var(--gold)" }}>IIT Delhi, AIIMS, CBSE Board, Coursera</em></div>
+//         </>)}
+//         {tab==="video" && (<>
+//           <SSHead>🎬 Video Section</SSHead>
+//           <IN label="Section Heading" name="videoHeading" placeholder="Experience Campus Life" />
+//           <TA label="Section Description" name="videoDesc" rows={3} />
+//           <IN label="YouTube Embed URL" name="videoUrl" placeholder="https://www.youtube.com/embed/VIDEO_ID" />
+//           <div style={{ padding:"12px 16px", background:"rgba(96,165,250,0.08)", borderRadius:8, border:"1px solid rgba(96,165,250,0.2)", fontSize:13, color:"var(--text-muted)", lineHeight:1.7, marginTop:8 }}>
+//             ℹ️ Use embed URL: <code style={{ color:"#60a5fa" }}>https://www.youtube.com/embed/VIDEO_ID</code> — not the regular watch URL.
+//           </div>
+//         </>)}
+//         {tab==="newsletter" && (<>
+//           <SSHead>📬 Newsletter Section</SSHead>
+//           <IN label="Heading (before 'Newsletter')" name="newsletterTitle" placeholder="Subscribe to Our" />
+//           <TA label="Description Text" name="newsletterDesc" rows={3} />
+//         </>)}
+//         {tab==="cta" && (<>
+//           <SSHead>📣 CTA Banner</SSHead>
+//           <IN label="Badge Text" name="ctaBadge" placeholder="Limited Seats Available" />
+//           <IN label="Main Heading" name="ctaTitle" placeholder="Ready to Begin Your Journey?" />
+//           <Two>
+//             <IN label="Button 1 Text" name="ctaBtn1" placeholder="Apply Now →" />
+//             <IN label="Button 2 Text" name="ctaBtn2" placeholder="Talk to Us" />
+//           </Two>
+//         </>)}
+//         {tab==="about" && (<>
+//           <SSHead>ℹ️ About Page</SSHead>
+//           <IN label="Section Heading" name="aboutTitle" />
+//           <TA label="First Paragraph" name="aboutDesc1" rows={3} />
+//           <TA label="Second Paragraph" name="aboutDesc2" rows={3} />
+//           <TA label="Mission Statement" name="aboutMission" rows={2} />
+//           <TA label="Vision Statement" name="aboutVision" rows={2} />
+//           <IN label="About Page Image URL" name="aboutImage" />
+//           {form.aboutImage && <div style={{ height:120, borderRadius:8, backgroundImage:`url('${form.aboutImage}')`, backgroundSize:"cover", backgroundPosition:"center", border:"1px solid rgba(201,168,76,0.2)", marginTop:8 }} />}
+//         </>)}
+//         {tab==="contact" && (<>
+//           <SSHead>📞 Contact Details</SSHead>
+//           <TA label="Full Address" name="address" rows={2} />
+//           <Two>
+//             <IN label="Primary Phone" name="phone" /><IN label="Secondary Phone" name="phone2" />
+//             <IN label="Primary Email" name="email" /><IN label="Secondary Email" name="email2" />
+//           </Two>
+//           <IN label="Office Hours" name="hours" />
+//           <IN label="WhatsApp Number (digits only)" name="whatsapp" placeholder="9876543210" />
+//           <TA label="Google Maps Embed URL" name="mapEmbed" rows={2} />
+//         </>)}
+//         {tab==="general" && (<>
+//           <SSHead>⚙️ General Branding</SSHead>
+//           <Two>
+//             <IN label="School / Brand Name" name="schoolName" />
+//             <IN label="Logo Text" name="logoText" />
+//           </Two>
+//           <IN label="Logo Tagline" name="logoTagline" />
+//           <TA label="Footer Description" name="footerDesc" rows={2} />
+//           <IN label="Footer Copyright Text" name="footerCopyright" />
+//           <SSHead>🔐 Login Page</SSHead>
+//           <IN label="Login Page Title" name="loginTitle" />
+//           <IN label="Login Page Subtitle" name="loginSubtitle" />
+//           <TA label="Inspirational Quote" name="loginQuote" rows={2} />
+//           <IN label="Quote Author" name="loginAuthor" />
+//         </>)}
+//         {tab==="social" && (<>
+//           <SSHead>🔗 Social Media Links</SSHead>
+//           <IN label="Facebook URL" name="socialFacebook" placeholder="https://facebook.com/yourpage" />
+//           <IN label="Instagram URL" name="socialInstagram" placeholder="https://instagram.com/yourpage" />
+//           <IN label="YouTube URL" name="socialYoutube" placeholder="https://youtube.com/yourchannel" />
+//           <IN label="Twitter / X URL" name="socialTwitter" placeholder="https://twitter.com/yourhandle" />
+//         </>)}
+//         {tab==="images" && (<>
+//           <SSHead>🖼️ Images & Backgrounds</SSHead>
+//           <p style={{ fontSize:13, color:"var(--text-muted)", marginBottom:20, lineHeight:1.6 }}>Paste any public image URL (Unsplash, Cloudinary, etc.)</p>
+//           {[{label:"Hero Background Image",name:"heroImage"},{label:"Login Page Background",name:"loginBg"}].map(({label,name})=>(
+//             <div key={name} style={{ marginBottom:24 }}>
+//               <SSField label={label} name={name} value={form[name]||""} onChange={h} />
+//               {form[name] && <div style={{ height:120, borderRadius:8, backgroundImage:`url('${form[name]}')`, backgroundSize:"cover", backgroundPosition:"center", border:"1px solid rgba(201,168,76,0.2)", marginTop:8 }} />}
 //             </div>
-//           </>
-//         )}
-
-//         <div style={{ display: "flex", gap: 12, marginTop: 28, flexWrap: "wrap" }}>
-//           <button className="btn-primary" style={{ flex: 1, justifyContent: "center" }} onClick={submit}>💾 Save All Changes</button>
-//           <button className="btn-outline" style={{ justifyContent: "center" }} onClick={reset}>↺ Reset to Default</button>
+//           ))}
+//         </>)}
+//         {tab==="seo" && (<>
+//           <SSHead>🔍 SEO & Meta</SSHead>
+//           <IN label="Page Title (browser tab)" name="metaTitle" placeholder="EduSphere – Shape Your Future" />
+//           <TA label="Meta Description (Google)" name="metaDesc" rows={3} />
+//         </>)}
+//         <div style={{ display:"flex", gap:12, marginTop:32, flexWrap:"wrap" }}>
+//           <button className="btn-primary" style={{ flex:1, justifyContent:"center" }} onClick={submit}>💾 Save All Changes</button>
+//           <button className="btn-outline" style={{ justifyContent:"center" }} onClick={reset}>↺ Reset to Default</button>
 //         </div>
 //       </div>
-
-//       {/* Live Preview snippet */}
-//       <div className="card" style={{ padding: 24, marginTop: 20 }}>
-//         <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 16, color: "var(--cream)", marginBottom: 12 }}>👁️ Live Preview — Current Values</div>
-//         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 10 }}>
+//       <div className="card" style={{ padding:24, marginTop:20 }}>
+//         <div style={{ fontFamily:"'Playfair Display',serif", fontSize:16, color:"var(--cream)", marginBottom:12 }}>👁️ Live Preview</div>
+//         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:10 }}>
 //           {[
-//             { label: "School Name", val: form.schoolName },
-//             { label: "Tagline",     val: form.tagline },
-//             { label: "Admission",   val: form.admissionOpen === "true" ? "🟢 Open" : "🔴 Closed" },
-//             { label: "Phone",       val: form.phone },
-//             { label: "Email",       val: form.email },
-//             { label: "Address",     val: form.address },
-//           ].map((r, i) => (
-//             <div key={i} style={{ fontSize: 13, padding: "10px 14px", background: "rgba(255,255,255,0.03)", borderRadius: 8 }}>
-//               <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.5 }}>{r.label}: </span>
-//               <span style={{ color: "var(--text-muted)" }}>{r.val || "—"}</span>
+//             {label:"School Name", val:form.schoolName},
+//             {label:"Tagline", val:form.tagline},
+//             {label:"Admission", val:form.admissionOpen==="true"?"🟢 Open":"🔴 Closed"},
+//             {label:"Phone", val:form.phone},
+//             {label:"Email", val:form.email},
+//             {label:"Features", val:[1,2,3,4,5,6].map(n=>form[`feat${n}Title`]).filter(Boolean).join(", ")},
+//             {label:"Partners", val:(form.partners||"").split(",").length+" partners"},
+//             {label:"FAQ Count", val:[1,2,3,4,5,6].filter(n=>form[`faq${n}Q`]).length+" questions"},
+//             {label:"Video", val:form.videoUrl?"✅ Set":"❌ Not set"},
+//             {label:"Hero Image", val:form.heroImage?"✅ Set":"❌ Not set"},
+//           ].map((r,i)=>(
+//             <div key={i} style={{ fontSize:13, padding:"10px 14px", background:"rgba(255,255,255,0.03)", borderRadius:8 }}>
+//               <span style={{ color:"var(--gold)", fontWeight:700, fontSize:11, textTransform:"uppercase", letterSpacing:0.5 }}>{r.label}: </span>
+//               <span style={{ color:"var(--text-muted)" }}>{r.val||"—"}</span>
 //             </div>
 //           ))}
 //         </div>
@@ -1382,13 +2052,16 @@
 //   )
 // }
 
+
+
+
 // /* ══════════════════════════════════════════════════════════════
 //    MAIN AdminDashboard
 // ══════════════════════════════════════════════════════════════ */
 // const MENU = [
 //   { key: "overview",   icon: "📊", label: "Overview"         },
 //   { key: "students",   icon: "👥", label: "Students"         },
-//   { key: "teachers",   icon: "🧑‍🏫", label: "Teachers"       },
+//   { key: "teachers",   icon: "🧑", label: "Teachers"       },
 //   { key: "courses",    icon: "📚", label: "Courses"          },
 //   { key: "timetable",  icon: "🗓️", label: "Timetable"       },
 //   { key: "exams",      icon: "📝", label: "Exams & Tests"    },
@@ -1489,6 +2162,10 @@
 //     </div>
 //   )
 // }
+
+
+
+
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -1613,6 +2290,64 @@ const DEFAULT_SITE = {
   whatsapp:      "9876543210",
   metaTitle:     "EduSphere – Shape Your Future with Excellence",
   metaDesc:      "EduSphere offers JEE, NEET, Commerce and Arts coaching in Khandwa, MP. Join 5000+ students.",
+  // ── Stats Bar
+  stat1Val:"5,000+", stat1Label:"Students Enrolled",
+  stat2Val:"120+",   stat2Label:"Courses Offered",
+  stat3Val:"98%",    stat3Label:"Satisfaction Rate",
+  stat4Val:"25+",    stat4Label:"Years of Excellence",
+  // ── Counter Stats (6)
+  counter1End:"5000",  counter1Suffix:"+", counter1Label:"Students Enrolled",  counter1Icon:"🎓",
+  counter2End:"120",   counter2Suffix:"+", counter2Label:"Courses Offered",    counter2Icon:"📚",
+  counter3End:"98",    counter3Suffix:"%", counter3Label:"Satisfaction Rate",  counter3Icon:"⭐",
+  counter4End:"200",   counter4Suffix:"+", counter4Label:"Faculty Members",    counter4Icon:"👨‍🏫",
+  counter5End:"25",    counter5Suffix:"+", counter5Label:"Years of Excellence",counter5Icon:"🏆",
+  counter6End:"15000", counter6Suffix:"+", counter6Label:"Alumni Worldwide",   counter6Icon:"🌍",
+  // ── Features (6) - icons added
+  feat1Icon:"🎓", feat2Icon:"💻", feat3Icon:"🏆", feat4Icon:"🤝", feat5Icon:"📊", feat6Icon:"🌍",
+  feat5Title:"Progress Tracking", feat5Desc:"Real-time dashboards to track your academic journey, attendance, and performance.",
+  feat6Title:"Global Network",    feat6Desc:"Connect with alumni across the globe and build lifelong professional relationships.",
+  // ── Achievements (4)
+  ach1Icon:"🥇", ach1Year:"2024", ach1Title:"Best Educational Institution", ach1Body:"Awarded by MP Government for outstanding academic excellence and student development.",
+  ach2Icon:"🏅", ach2Year:"2023", ach2Title:"NAAC A++ Accreditation",       ach2Body:"Received highest accreditation grade from National Assessment & Accreditation Council.",
+  ach3Icon:"🎖️", ach3Year:"2022", ach3Title:"National Innovation Award",    ach3Body:"Recognized for pioneering digital learning initiatives across central India.",
+  ach4Icon:"🌟", ach4Year:"2021", ach4Title:"Top 10 Schools of India",      ach4Body:"Ranked among India's top institutions by Education World magazine.",
+  // ── Testimonials (6)
+  test1Name:"Priya Sharma",   test1Role:"JEE Advanced Qualifier, IIT Delhi",  test1Avatar:"P", test1Text:"EduSphere completely transformed my approach to learning. The faculty is world-class and the personal mentorship helped me crack JEE Advanced on my first attempt.",
+  test2Name:"Rohan Verma",    test2Role:"NEET Qualifier, AIIMS Delhi",         test2Avatar:"R", test2Text:"The structured preparation, mock tests, and doubt-clearing sessions at EduSphere gave me the confidence to achieve my dream of getting into AIIMS.",
+  test3Name:"Sneha Patel",    test3Role:"CA Final, Big 4 Firm",                test3Avatar:"S", test3Text:"From commerce foundations to CA Finals — EduSphere was with me every step. The faculty's industry experience made all the difference.",
+  test4Name:"Aditya Rao",     test4Role:"Software Engineer, Google",           test4Avatar:"A", test4Text:"The Computer Science program at EduSphere gave me a rock-solid foundation. I credit my placement at Google entirely to the quality of education here.",
+  test5Name:"Meera Joshi",    test5Role:"Civil Services (IAS), Batch 2023",    test5Avatar:"M", test5Text:"EduSphere's disciplined environment and expert guidance helped me crack UPSC in my very first attempt. Forever grateful.",
+  test6Name:"Arjun Malhotra", test6Role:"MBA, IIM Ahmedabad",                  test6Avatar:"A", test6Text:"The holistic education at EduSphere — academics, personality development, and real-world exposure — prepared me perfectly for IIM.",
+  // ── Team (6)
+  team1Name:"Dr. Rajesh Kumar",  team1Role:"Principal & Founder",     team1Subject:"Physics",      team1Exp:"30+ yrs", team1Avatar:"R",
+  team2Name:"Mrs. Sunita Patel", team2Role:"Head of Science Dept.",   team2Subject:"Chemistry",    team2Exp:"22+ yrs", team2Avatar:"S",
+  team3Name:"Mr. Anil Sharma",   team3Role:"Head of Mathematics",     team3Subject:"Mathematics",  team3Exp:"18+ yrs", team3Avatar:"A",
+  team4Name:"Dr. Priya Gupta",   team4Role:"Head of Commerce",        team4Subject:"Accountancy",  team4Exp:"15+ yrs", team4Avatar:"P",
+  team5Name:"Mr. Rohit Joshi",   team5Role:"CS & Technology Lead",    team5Subject:"Computer Sci.",team5Exp:"12+ yrs", team5Avatar:"R",
+  team6Name:"Mrs. Kavita Singh", team6Role:"Head of Languages",       team6Subject:"English",      team6Exp:"20+ yrs", team6Avatar:"K",
+  // ── Events (6)
+  ev1Date:"15", ev1Month:"Jan", ev1Title:"Annual Science Exhibition",      ev1Time:"10:00 AM", ev1Venue:"Main Hall",    ev1Cat:"Academic",
+  ev2Date:"22", ev2Month:"Jan", ev2Title:"JEE/NEET Mock Test Series",      ev2Time:"8:00 AM",  ev2Venue:"Exam Centre",  ev2Cat:"Exam",
+  ev3Date:"05", ev3Month:"Feb", ev3Title:"Inter-School Debate Competition", ev3Time:"2:00 PM",  ev3Venue:"Auditorium",   ev3Cat:"Cultural",
+  ev4Date:"14", ev4Month:"Feb", ev4Title:"Career Counselling Seminar",     ev4Time:"11:00 AM", ev4Venue:"Seminar Hall", ev4Cat:"Career",
+  ev5Date:"28", ev5Month:"Feb", ev5Title:"Annual Sports Day",              ev5Time:"9:00 AM",  ev5Venue:"Sports Ground",ev5Cat:"Sports",
+  ev6Date:"10", ev6Month:"Mar", ev6Title:"Parent-Teacher Meeting",         ev6Time:"3:00 PM",  ev6Venue:"All Classes",  ev6Cat:"Meeting",
+  // ── Partners
+  partners:"IIT Delhi,AIIMS,CBSE Board,ICSE Council,Coursera,Khan Academy,NIT Bhopal,IIM Indore,BYJU'S,Unacademy,TopRankers,Allen Institute",
+  // ── FAQ (6)
+  faq1Q:"What courses does EduSphere offer?",          faq1A:"We offer programs for Science (PCM/PCB), Commerce, Arts, Computer Science, and entrance exam preparation including JEE, NEET, CA Foundation, and CLAT.",
+  faq2Q:"What is the admission process?",              faq2A:"You can apply online or visit our campus. The process includes a registration form, entrance test, counselling session, and document verification. Seats are limited.",
+  faq3Q:"Does EduSphere provide hostel facilities?",   faq3A:"Yes, we have separate hostel facilities for boys and girls with 24/7 security, nutritious meals, and a conducive study environment.",
+  faq4Q:"Are scholarships available?",                 faq4A:"Yes! We offer merit-based scholarships (up to 100% fee waiver) and need-based financial assistance. Contact our admissions office for details.",
+  faq5Q:"What is the student-to-teacher ratio?",       faq5A:"We maintain a low 15:1 student-teacher ratio to ensure personalized attention and quality education for every student.",
+  faq6Q:"How can I track my child's academic progress?", faq6A:"Parents can access the student portal using login credentials provided at admission. It shows attendance, grades, assignments, and notices in real-time.",
+  // ── Newsletter
+  newsletterTitle:"Subscribe to Our",
+  newsletterDesc: "Get the latest updates on admissions, events, scholarships, and academic news delivered straight to your inbox.",
+  // ── Video
+  videoUrl:     "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1",
+  videoHeading: "Experience Campus Life",
+  videoDesc:    "Take a virtual tour of our world-class campus, meet our faculty, and see why thousands of students choose EduSphere every year.",
 }
 
 /* ─── Reusable Modal ────────────────────────────────────────── */
@@ -2065,27 +2800,168 @@ function Teachers({ data, setData }) {
 }
 
 /* ── Courses ── */
+// function Courses({ data, setData, teachers }) {
+//   const empty = { name: "", duration: "12 months", fee: "", seats: "40", enrolled: "0", status: "active", teacher: "", batchTime: "", syllabus: "", startDate: "", description: "" }
+//   const [modal, setModal] = useState(null)
+//   const [viewModal, setViewModal] = useState(null)
+//   const [form, setForm] = useState(empty)
+//   const handle = e => setForm({ ...form, [e.target.name]: e.target.value })
+//   const openAdd = () => { setForm(empty); setModal({ mode: "add" }) }
+//   const openEdit = item => { setForm({ ...item }); setModal({ mode: "edit", item }) }
+//   const submit = () => {
+//     if (modal.mode === "add") { const u = [...data, { ...form, id: Date.now() }]; setData(u); save("courses", u) }
+//     else { const u = data.map(c => c.id === modal.item.id ? { ...form, id: c.id } : c); setData(u); save("courses", u) }
+//     setModal(null)
+//   }
+//   const del = id => { if (!confirm("Delete this course?")) return; const u = data.filter(c => c.id !== id); setData(u); save("courses", u) }
+//   const teacherOptions = ["—", ...teachers.map(t => t.name)]
+//   return (
+//     <>
+//       <SectionHeader title="Courses" subtitle={`${data.length} courses · ${data.reduce((a, c) => a + Number(c.enrolled), 0)} total enrolled`} onAdd={openAdd} addLabel="+ Add Course" />
+//       <div className="card" style={{ overflowX: "auto" }}>
+//         <table className="activity-table">
+//           <thead><tr><th>Course Name</th><th>Teacher</th><th>Duration</th><th>Fee (₹)</th><th>Batch Time</th><th>Seats</th><th>Status</th><th>Actions</th></tr></thead>
+//           <tbody>
+//             {data.map(c => {
+//               const pct = Math.round((Number(c.enrolled) / Number(c.seats)) * 100)
+//               return (
+//                 <tr key={c.id}>
+//                   <td>
+//                     <div style={{ color: "var(--cream)", fontWeight: 500 }}>{c.name}</div>
+//                     <div style={{ fontSize: 11, color: "var(--text-muted)" }}>{c.syllabus}</div>
+//                   </td>
+//                   <td style={{ fontSize: 13 }}>{c.teacher || "—"}</td>
+//                   <td>{c.duration}</td>
+//                   <td>₹{Number(c.fee).toLocaleString()}</td>
+//                   <td style={{ fontSize: 12, color: "var(--text-muted)" }}>{c.batchTime || "—"}</td>
+//                   <td>
+//                     <div style={{ fontSize: 12 }}>{c.enrolled}/{c.seats}</div>
+//                     <div style={{ width: 50, height: 3, background: "rgba(255,255,255,0.1)", borderRadius: 100, marginTop: 4 }}>
+//                       <div style={{ width: pct + "%", height: "100%", background: pct > 85 ? "#f87171" : "var(--gold)", borderRadius: 100 }} />
+//                     </div>
+//                   </td>
+//                   <td><span className={`status-badge status-${c.status}`}>{c.status}</span></td>
+//                   <td>
+//                     <ActionBtn label="View" color="#60a5fa" onClick={() => setViewModal(c)} />
+//                     <ActionBtn label="Edit" onClick={() => openEdit(c)} />
+//                     <ActionBtn label="Delete" color="#f87171" onClick={() => del(c.id)} />
+//                   </td>
+//                 </tr>
+//               )
+//             })}
+//           </tbody>
+//         </table>
+//       </div>
+
+//       {viewModal && (
+//         <Modal title="Course Details" onClose={() => setViewModal(null)} wide>
+//           <InfoRow label="Course Name" value={viewModal.name} />
+//           <InfoRow label="Duration" value={viewModal.duration} />
+//           <InfoRow label="Fee" value={"₹" + Number(viewModal.fee).toLocaleString()} />
+//           <InfoRow label="Batch Time" value={viewModal.batchTime} />
+//           <InfoRow label="Start Date" value={viewModal.startDate} />
+//           <InfoRow label="Teacher" value={viewModal.teacher} />
+//           <InfoRow label="Total Seats" value={viewModal.seats} />
+//           <InfoRow label="Enrolled" value={viewModal.enrolled} />
+//           <InfoRow label="Syllabus" value={viewModal.syllabus} />
+//           <InfoRow label="Status" value={viewModal.status} />
+//           {viewModal.description && (
+//             <div style={{ marginTop: 12, padding: "12px 16px", background: "rgba(255,255,255,0.03)", borderRadius: 8 }}>
+//               <div style={{ fontSize: 12, color: "var(--gold)", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, marginBottom: 8 }}>Description</div>
+//               <div style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7 }}>{viewModal.description}</div>
+//             </div>
+//           )}
+//         </Modal>
+//       )}
+
+//       {modal && (
+//         <Modal title={modal.mode === "add" ? "Add Course" : "Edit Course"} onClose={() => setModal(null)} wide>
+//           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 20px" }}>
+//             <Field label="Course Name"   name="name"      value={form.name}      onChange={handle} />
+//             <Field label="Duration"      name="duration"  value={form.duration}  onChange={handle} options={["3 months", "6 months", "10 months", "12 months", "18 months", "24 months"]} />
+//             <Field label="Fee (₹)"       name="fee"       value={form.fee}       onChange={handle} type="number" />
+//             <Field label="Total Seats"   name="seats"     value={form.seats}     onChange={handle} type="number" />
+//             <Field label="Enrolled"      name="enrolled"  value={form.enrolled}  onChange={handle} type="number" />
+//             <Field label="Start Date"    name="startDate" value={form.startDate} onChange={handle} type="date" />
+//             <Field label="Batch Time"    name="batchTime" value={form.batchTime} onChange={handle} placeholder="e.g. 7:00 AM – 9:00 AM" />
+//             <Field label="Assigned Teacher" name="teacher" value={form.teacher}  onChange={handle} options={teacherOptions} />
+//             <Field label="Status"        name="status"    value={form.status}    onChange={handle} options={["active", "inactive"]} />
+//           </div>
+//           <Field label="Syllabus Topics" name="syllabus" value={form.syllabus} onChange={handle} placeholder="e.g. Physics, Chemistry, Mathematics" />
+//           <div style={{ marginBottom: 16 }}>
+//             <label style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", marginBottom: 6 }}>Course Description</label>
+//             <textarea name="description" value={form.description} onChange={handle} rows={3}
+//               style={{ width: "100%", padding: "11px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "var(--text)", fontFamily: "'DM Sans',sans-serif", fontSize: 14, outline: "none", resize: "vertical", boxSizing: "border-box" }} />
+//           </div>
+//           <button className="btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 8 }} onClick={submit}>
+//             {modal.mode === "add" ? "Add Course" : "Save Changes"}
+//           </button>
+//         </Modal>
+//       )}
+//     </>
+//   )
+// }
+
+
 function Courses({ data, setData, teachers }) {
-  const empty = { name: "", duration: "12 months", fee: "", seats: "40", enrolled: "0", status: "active", teacher: "", batchTime: "", syllabus: "", startDate: "", description: "" }
+  const empty = {
+    name: "", duration: "12 months", fee: "", seats: "40", enrolled: "0",
+    status: "active", teacher: "", batchTime: "", syllabus: "", startDate: "",
+    description: "",
+    // Public page ke liye extra fields
+    thumb: "", badge: "Science", level: "Beginner", mode: "Offline", rating: "4.8"
+  }
+
   const [modal, setModal] = useState(null)
   const [viewModal, setViewModal] = useState(null)
   const [form, setForm] = useState(empty)
+
   const handle = e => setForm({ ...form, [e.target.name]: e.target.value })
   const openAdd = () => { setForm(empty); setModal({ mode: "add" }) }
   const openEdit = item => { setForm({ ...item }); setModal({ mode: "edit", item }) }
+
   const submit = () => {
-    if (modal.mode === "add") { const u = [...data, { ...form, id: Date.now() }]; setData(u); save("courses", u) }
-    else { const u = data.map(c => c.id === modal.item.id ? { ...form, id: c.id } : c); setData(u); save("courses", u) }
+    if (modal.mode === "add") {
+      const u = [...data, { ...form, id: Date.now() }]
+      setData(u); save("courses", u)
+    } else {
+      const u = data.map(c => c.id === modal.item.id ? { ...form, id: c.id } : c)
+      setData(u); save("courses", u)
+    }
     setModal(null)
   }
-  const del = id => { if (!confirm("Delete this course?")) return; const u = data.filter(c => c.id !== id); setData(u); save("courses", u) }
+
+  const del = id => {
+    if (!confirm("Delete this course?")) return
+    const u = data.filter(c => c.id !== id)
+    setData(u); save("courses", u)
+  }
+
   const teacherOptions = ["—", ...teachers.map(t => t.name)]
+
   return (
     <>
-      <SectionHeader title="Courses" subtitle={`${data.length} courses · ${data.reduce((a, c) => a + Number(c.enrolled), 0)} total enrolled`} onAdd={openAdd} addLabel="+ Add Course" />
+      <SectionHeader
+        title="Courses"
+        subtitle={`${data.length} courses · ${data.reduce((a, c) => a + Number(c.enrolled), 0)} total enrolled`}
+        onAdd={openAdd}
+        addLabel="+ Add Course"
+      />
+
       <div className="card" style={{ overflowX: "auto" }}>
         <table className="activity-table">
-          <thead><tr><th>Course Name</th><th>Teacher</th><th>Duration</th><th>Fee (₹)</th><th>Batch Time</th><th>Seats</th><th>Status</th><th>Actions</th></tr></thead>
+          <thead>
+            <tr>
+              <th>Course Name</th>
+              <th>Teacher</th>
+              <th>Duration</th>
+              <th>Fee (₹)</th>
+              <th>Batch Time</th>
+              <th>Seats</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
           <tbody>
             {data.map(c => {
               const pct = Math.round((Number(c.enrolled) / Number(c.seats)) * 100)
@@ -2118,18 +2994,29 @@ function Courses({ data, setData, teachers }) {
         </table>
       </div>
 
+      {/* ── View Modal ── */}
       {viewModal && (
         <Modal title="Course Details" onClose={() => setViewModal(null)} wide>
-          <InfoRow label="Course Name" value={viewModal.name} />
-          <InfoRow label="Duration" value={viewModal.duration} />
-          <InfoRow label="Fee" value={"₹" + Number(viewModal.fee).toLocaleString()} />
-          <InfoRow label="Batch Time" value={viewModal.batchTime} />
-          <InfoRow label="Start Date" value={viewModal.startDate} />
-          <InfoRow label="Teacher" value={viewModal.teacher} />
-          <InfoRow label="Total Seats" value={viewModal.seats} />
-          <InfoRow label="Enrolled" value={viewModal.enrolled} />
-          <InfoRow label="Syllabus" value={viewModal.syllabus} />
-          <InfoRow label="Status" value={viewModal.status} />
+          <InfoRow label="Course Name"  value={viewModal.name} />
+          <InfoRow label="Duration"     value={viewModal.duration} />
+          <InfoRow label="Fee"          value={"₹" + Number(viewModal.fee).toLocaleString()} />
+          <InfoRow label="Batch Time"   value={viewModal.batchTime} />
+          <InfoRow label="Start Date"   value={viewModal.startDate} />
+          <InfoRow label="Teacher"      value={viewModal.teacher} />
+          <InfoRow label="Total Seats"  value={viewModal.seats} />
+          <InfoRow label="Enrolled"     value={viewModal.enrolled} />
+          <InfoRow label="Syllabus"     value={viewModal.syllabus} />
+          <InfoRow label="Status"       value={viewModal.status} />
+          <InfoRow label="Category"     value={viewModal.badge} />
+          <InfoRow label="Level"        value={viewModal.level} />
+          <InfoRow label="Mode"         value={viewModal.mode} />
+          <InfoRow label="Rating"       value={viewModal.rating} />
+          {viewModal.thumb && (
+            <div style={{ marginTop: 12 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", marginBottom: 8 }}>Thumbnail Preview</div>
+              <img src={viewModal.thumb} alt="thumb" style={{ width: "100%", maxHeight: 160, objectFit: "cover", borderRadius: 8, opacity: 0.85 }} />
+            </div>
+          )}
           {viewModal.description && (
             <div style={{ marginTop: 12, padding: "12px 16px", background: "rgba(255,255,255,0.03)", borderRadius: 8 }}>
               <div style={{ fontSize: 12, color: "var(--gold)", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, marginBottom: 8 }}>Description</div>
@@ -2139,26 +3026,52 @@ function Courses({ data, setData, teachers }) {
         </Modal>
       )}
 
+      {/* ── Add / Edit Modal ── */}
       {modal && (
         <Modal title={modal.mode === "add" ? "Add Course" : "Edit Course"} onClose={() => setModal(null)} wide>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 20px" }}>
-            <Field label="Course Name"   name="name"      value={form.name}      onChange={handle} />
-            <Field label="Duration"      name="duration"  value={form.duration}  onChange={handle} options={["3 months", "6 months", "10 months", "12 months", "18 months", "24 months"]} />
-            <Field label="Fee (₹)"       name="fee"       value={form.fee}       onChange={handle} type="number" />
-            <Field label="Total Seats"   name="seats"     value={form.seats}     onChange={handle} type="number" />
-            <Field label="Enrolled"      name="enrolled"  value={form.enrolled}  onChange={handle} type="number" />
-            <Field label="Start Date"    name="startDate" value={form.startDate} onChange={handle} type="date" />
-            <Field label="Batch Time"    name="batchTime" value={form.batchTime} onChange={handle} placeholder="e.g. 7:00 AM – 9:00 AM" />
-            <Field label="Assigned Teacher" name="teacher" value={form.teacher}  onChange={handle} options={teacherOptions} />
-            <Field label="Status"        name="status"    value={form.status}    onChange={handle} options={["active", "inactive"]} />
+            <Field label="Course Name"      name="name"      value={form.name}      onChange={handle} />
+            <Field label="Duration"         name="duration"  value={form.duration}  onChange={handle} options={["3 months","6 months","10 months","12 months","18 months","24 months"]} />
+            <Field label="Fee (₹)"          name="fee"       value={form.fee}       onChange={handle} type="number" />
+            <Field label="Total Seats"      name="seats"     value={form.seats}     onChange={handle} type="number" />
+            <Field label="Enrolled"         name="enrolled"  value={form.enrolled}  onChange={handle} type="number" />
+            <Field label="Start Date"       name="startDate" value={form.startDate} onChange={handle} type="date" />
+            <Field label="Batch Time"       name="batchTime" value={form.batchTime} onChange={handle} placeholder="e.g. 7:00 AM – 9:00 AM" />
+            <Field label="Assigned Teacher" name="teacher"   value={form.teacher}   onChange={handle} options={teacherOptions} />
+            <Field label="Status"           name="status"    value={form.status}    onChange={handle} options={["active","inactive"]} />
+            <Field label="Rating"           name="rating"    value={form.rating}    onChange={handle} placeholder="e.g. 4.9" />
+            <Field label="Category / Badge" name="badge"     value={form.badge}     onChange={handle} options={["Science","Commerce","Technology","Arts","Language","Entrance"]} />
+            <Field label="Level"            name="level"     value={form.level}     onChange={handle} options={["Beginner","Intermediate","Advanced"]} />
+            <Field label="Mode"             name="mode"      value={form.mode}      onChange={handle} options={["Offline","Online","Hybrid"]} />
           </div>
+
           <Field label="Syllabus Topics" name="syllabus" value={form.syllabus} onChange={handle} placeholder="e.g. Physics, Chemistry, Mathematics" />
+
+          <Field label="Thumbnail URL" name="thumb" value={form.thumb} onChange={handle} placeholder="https://images.unsplash.com/..." />
+          {form.thumb && (
+            <div style={{ marginBottom: 16 }}>
+              <img src={form.thumb} alt="preview" style={{ width: "100%", maxHeight: 140, objectFit: "cover", borderRadius: 8, opacity: 0.8 }} />
+            </div>
+          )}
+
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", marginBottom: 6 }}>Course Description</label>
-            <textarea name="description" value={form.description} onChange={handle} rows={3}
-              style={{ width: "100%", padding: "11px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "var(--text)", fontFamily: "'DM Sans',sans-serif", fontSize: 14, outline: "none", resize: "vertical", boxSizing: "border-box" }} />
+            <label style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", marginBottom: 6 }}>
+              Course Description
+            </label>
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={handle}
+              rows={3}
+              style={{ width: "100%", padding: "11px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "var(--text)", fontFamily: "'DM Sans',sans-serif", fontSize: 14, outline: "none", resize: "vertical", boxSizing: "border-box" }}
+            />
           </div>
-          <button className="btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 8 }} onClick={submit}>
+
+          <button
+            className="btn-primary"
+            style={{ width: "100%", justifyContent: "center", marginTop: 8 }}
+            onClick={submit}
+          >
             {modal.mode === "add" ? "Add Course" : "Save Changes"}
           </button>
         </Modal>
@@ -2166,6 +3079,36 @@ function Courses({ data, setData, teachers }) {
     </>
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ── Timetable ── */
 function Timetable({ data, setData }) {
@@ -2474,28 +3417,146 @@ function Notices({ data, setData }) {
   )
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 /* ── Gallery ── */
+// function Gallery({ data, setData }) {
+//   const empty = { caption: "", url: "", category: "Event", album: "" }
+//   const [modal, setModal] = useState(null)
+//   const [form, setForm] = useState(empty)
+//   const [filterCat, setFilterCat] = useState("All")
+//   const [lightbox, setLightbox] = useState(null)
+//   const handle = e => setForm({ ...form, [e.target.name]: e.target.value })
+//   const openAdd = () => { setForm(empty); setModal({ mode: "add" }) }
+//   const openEdit = item => { setForm({ ...item }); setModal({ mode: "edit", item }) }
+//   const submit = () => {
+//     if (modal.mode === "add") { const u = [...data, { ...form, id: Date.now() }]; setData(u); save("gallery", u) }
+//     else { const u = data.map(g => g.id === modal.item.id ? { ...form, id: g.id } : g); setData(u); save("gallery", u) }
+//     setModal(null)
+//   }
+//   const del = id => { if (!confirm("Delete this image?")) return; const u = data.filter(g => g.id !== id); setData(u); save("gallery", u) }
+//   const categories = ["All", ...new Set(data.map(g => g.category))]
+//   const filtered = filterCat === "All" ? data : data.filter(g => g.category === filterCat)
+//   const albums = [...new Set(data.map(g => g.album).filter(Boolean))]
+//   return (
+//     <>
+//       <SectionHeader title="Gallery" subtitle={`${data.length} images · ${albums.length} albums`} onAdd={openAdd} addLabel="+ Add Image" />
+//       <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
+//         {categories.map(c => (
+//           <button key={c} onClick={() => setFilterCat(c)} style={{
+//             padding: "7px 16px", borderRadius: 100, fontSize: 12, fontWeight: 600, cursor: "pointer",
+//             background: filterCat === c ? "var(--gold)" : "rgba(255,255,255,0.05)",
+//             color: filterCat === c ? "var(--dark)" : "var(--text-muted)",
+//             border: "1px solid " + (filterCat === c ? "var(--gold)" : "rgba(255,255,255,0.1)"),
+//             fontFamily: "'DM Sans',sans-serif",
+//           }}>{c}</button>
+//         ))}
+//       </div>
+//       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 16 }}>
+//         {filtered.map(g => (
+//           <div key={g.id} className="card" style={{ overflow: "hidden" }}>
+//             <div onClick={() => setLightbox(g)} style={{ height: 150, backgroundImage: `url('${g.url}')`, backgroundSize: "cover", backgroundPosition: "center", cursor: "zoom-in", position: "relative" }}>
+//               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0)", transition: "background 0.2s" }} className="gallery-hover" />
+//             </div>
+//             <div style={{ padding: "14px 16px" }}>
+//               <div style={{ fontSize: 13, fontWeight: 600, color: "var(--cream)", marginBottom: 2 }}>{g.caption}</div>
+//               <div style={{ fontSize: 11, color: "var(--gold)", letterSpacing: 1, textTransform: "uppercase", marginBottom: g.album ? 2 : 10 }}>{g.category}</div>
+//               {g.album && <div style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 10 }}>📁 {g.album}</div>}
+//               <div>
+//                 <ActionBtn label="Edit" onClick={() => openEdit(g)} />
+//                 <ActionBtn label="Delete" color="#f87171" onClick={() => del(g.id)} />
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+
+//       {/* Lightbox */}
+//       {lightbox && (
+//         <div style={{ position: "fixed", inset: 0, zIndex: 99999, background: "rgba(0,0,0,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }} onClick={() => setLightbox(null)}>
+//           <div style={{ textAlign: "center" }} onClick={e => e.stopPropagation()}>
+//             <img src={lightbox.url} alt={lightbox.caption} style={{ maxWidth: "80vw", maxHeight: "70vh", borderRadius: 12, boxShadow: "0 20px 60px rgba(0,0,0,0.8)" }} />
+//             <div style={{ fontSize: 15, color: "var(--cream)", marginTop: 16 }}>{lightbox.caption}</div>
+//             <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 4 }}>{lightbox.album} · {lightbox.category}</div>
+//             <button onClick={() => setLightbox(null)} style={{ marginTop: 16, background: "rgba(255,255,255,0.1)", border: "none", color: "var(--text-muted)", padding: "8px 20px", borderRadius: 8, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>Close</button>
+//           </div>
+//         </div>
+//       )}
+
+//       {modal && (
+//         <Modal title={modal.mode === "add" ? "Add Image" : "Edit Image"} onClose={() => setModal(null)}>
+//           <Field label="Caption"     name="caption"  value={form.caption}  onChange={handle} />
+//           <Field label="Image URL"   name="url"      value={form.url}      onChange={handle} />
+//           <Field label="Category"    name="category" value={form.category} onChange={handle} options={["Event", "Academic", "Sports", "Campus", "Cultural", "Other"]} />
+//           <Field label="Album Name"  name="album"    value={form.album}    onChange={handle} placeholder="e.g. Convocation 2024" />
+//           {form.url && (
+//             <div style={{ marginBottom: 16, borderRadius: 8, overflow: "hidden", height: 140, backgroundImage: `url('${form.url}')`, backgroundSize: "cover", backgroundPosition: "center", border: "1px solid rgba(201,168,76,0.2)" }} />
+//           )}
+//           <button className="btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={submit}>
+//             {modal.mode === "add" ? "Add Image" : "Save Changes"}
+//           </button>
+//         </Modal>
+//       )}
+//     </>
+//   )
+// }
+
+
 function Gallery({ data, setData }) {
-  const empty = { caption: "", url: "", category: "Event", album: "" }
+  const empty = { caption: "", url: "", category: "Events", album: "", year: new Date().getFullYear().toString() }
   const [modal, setModal] = useState(null)
   const [form, setForm] = useState(empty)
   const [filterCat, setFilterCat] = useState("All")
   const [lightbox, setLightbox] = useState(null)
+
   const handle = e => setForm({ ...form, [e.target.name]: e.target.value })
   const openAdd = () => { setForm(empty); setModal({ mode: "add" }) }
   const openEdit = item => { setForm({ ...item }); setModal({ mode: "edit", item }) }
+
   const submit = () => {
-    if (modal.mode === "add") { const u = [...data, { ...form, id: Date.now() }]; setData(u); save("gallery", u) }
-    else { const u = data.map(g => g.id === modal.item.id ? { ...form, id: g.id } : g); setData(u); save("gallery", u) }
+    let u
+    if (modal.mode === "add") {
+      u = [...data, { ...form, id: Date.now() }]
+    } else {
+      u = data.map(g => g.id === modal.item.id ? { ...form, id: g.id } : g)
+    }
+    setData(u)
+    // Direct localStorage save — key "gallery" pe
+    localStorage.setItem("gallery", JSON.stringify(u))
     setModal(null)
   }
-  const del = id => { if (!confirm("Delete this image?")) return; const u = data.filter(g => g.id !== id); setData(u); save("gallery", u) }
+
+  const del = id => {
+    if (!confirm("Delete this image?")) return
+    const u = data.filter(g => g.id !== id)
+    setData(u)
+    localStorage.setItem("gallery", JSON.stringify(u))
+  }
+
   const categories = ["All", ...new Set(data.map(g => g.category))]
   const filtered = filterCat === "All" ? data : data.filter(g => g.category === filterCat)
   const albums = [...new Set(data.map(g => g.album).filter(Boolean))]
+
   return (
     <>
-      <SectionHeader title="Gallery" subtitle={`${data.length} images · ${albums.length} albums`} onAdd={openAdd} addLabel="+ Add Image" />
+      <SectionHeader
+        title="Gallery"
+        subtitle={`${data.length} images · ${albums.length} albums`}
+        onAdd={openAdd}
+        addLabel="+ Add Image"
+      />
+
+      {/* Category Filter Pills */}
       <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
         {categories.map(c => (
           <button key={c} onClick={() => setFilterCat(c)} style={{
@@ -2507,17 +3568,23 @@ function Gallery({ data, setData }) {
           }}>{c}</button>
         ))}
       </div>
+
+      {/* Grid */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 16 }}>
         {filtered.map(g => (
           <div key={g.id} className="card" style={{ overflow: "hidden" }}>
-            <div onClick={() => setLightbox(g)} style={{ height: 150, backgroundImage: `url('${g.url}')`, backgroundSize: "cover", backgroundPosition: "center", cursor: "zoom-in", position: "relative" }}>
-              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0)", transition: "background 0.2s" }} className="gallery-hover" />
+            <div
+              onClick={() => setLightbox(g)}
+              style={{ height: 150, backgroundImage: `url('${g.url}')`, backgroundSize: "cover", backgroundPosition: "center", cursor: "zoom-in", position: "relative" }}
+            >
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0)", transition: "background 0.2s" }} />
             </div>
             <div style={{ padding: "14px 16px" }}>
               <div style={{ fontSize: 13, fontWeight: 600, color: "var(--cream)", marginBottom: 2 }}>{g.caption}</div>
-              <div style={{ fontSize: 11, color: "var(--gold)", letterSpacing: 1, textTransform: "uppercase", marginBottom: g.album ? 2 : 10 }}>{g.category}</div>
+              <div style={{ fontSize: 11, color: "var(--gold)", letterSpacing: 1, textTransform: "uppercase", marginBottom: 2 }}>{g.category}</div>
+              {g.year  && <div style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 2 }}>📅 {g.year}</div>}
               {g.album && <div style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 10 }}>📁 {g.album}</div>}
-              <div>
+              <div style={{ marginTop: 8 }}>
                 <ActionBtn label="Edit" onClick={() => openEdit(g)} />
                 <ActionBtn label="Delete" color="#f87171" onClick={() => del(g.id)} />
               </div>
@@ -2528,22 +3595,30 @@ function Gallery({ data, setData }) {
 
       {/* Lightbox */}
       {lightbox && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 99999, background: "rgba(0,0,0,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }} onClick={() => setLightbox(null)}>
+        <div
+          style={{ position: "fixed", inset: 0, zIndex: 99999, background: "rgba(0,0,0,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+          onClick={() => setLightbox(null)}
+        >
           <div style={{ textAlign: "center" }} onClick={e => e.stopPropagation()}>
             <img src={lightbox.url} alt={lightbox.caption} style={{ maxWidth: "80vw", maxHeight: "70vh", borderRadius: 12, boxShadow: "0 20px 60px rgba(0,0,0,0.8)" }} />
             <div style={{ fontSize: 15, color: "var(--cream)", marginTop: 16 }}>{lightbox.caption}</div>
-            <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 4 }}>{lightbox.album} · {lightbox.category}</div>
-            <button onClick={() => setLightbox(null)} style={{ marginTop: 16, background: "rgba(255,255,255,0.1)", border: "none", color: "var(--text-muted)", padding: "8px 20px", borderRadius: 8, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>Close</button>
+            <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 4 }}>{lightbox.category} · {lightbox.year} {lightbox.album ? `· 📁 ${lightbox.album}` : ""}</div>
+            <button
+              onClick={() => setLightbox(null)}
+              style={{ marginTop: 16, background: "rgba(255,255,255,0.1)", border: "none", color: "var(--text-muted)", padding: "8px 20px", borderRadius: 8, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}
+            >Close</button>
           </div>
         </div>
       )}
 
+      {/* Add / Edit Modal */}
       {modal && (
         <Modal title={modal.mode === "add" ? "Add Image" : "Edit Image"} onClose={() => setModal(null)}>
-          <Field label="Caption"     name="caption"  value={form.caption}  onChange={handle} />
-          <Field label="Image URL"   name="url"      value={form.url}      onChange={handle} />
-          <Field label="Category"    name="category" value={form.category} onChange={handle} options={["Event", "Academic", "Sports", "Campus", "Cultural", "Other"]} />
-          <Field label="Album Name"  name="album"    value={form.album}    onChange={handle} placeholder="e.g. Convocation 2024" />
+          <Field label="Caption"    name="caption"  value={form.caption}  onChange={handle} />
+          <Field label="Image URL"  name="url"      value={form.url}      onChange={handle} />
+          <Field label="Category"   name="category" value={form.category} onChange={handle} options={["Events","Academic","Sports","Campus","Cultural","Other"]} />
+          <Field label="Year"       name="year"     value={form.year}     onChange={handle} options={["2025","2024","2023","2022","2021","2020"]} />
+          <Field label="Album Name" name="album"    value={form.album}    onChange={handle} placeholder="e.g. Convocation 2024" />
           {form.url && (
             <div style={{ marginBottom: 16, borderRadius: 8, overflow: "hidden", height: 140, backgroundImage: `url('${form.url}')`, backgroundSize: "cover", backgroundPosition: "center", border: "1px solid rgba(201,168,76,0.2)" }} />
           )}
@@ -2556,6 +3631,21 @@ function Gallery({ data, setData }) {
   )
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 /* ── Fees ── */
 function Fees({ data, setData, students, courses }) {
   const empty = { student: "", course: "", amount: "", paid: "0", date: new Date().toISOString().split("T")[0], status: "Pending", method: "Cash", txnId: "", remarks: "" }
@@ -2665,213 +3755,525 @@ function Fees({ data, setData, students, courses }) {
   )
 }
 
-/* ── Website Settings (Fully Editable & Applied) ── */
-const DEFAULT_SITE_DATA = DEFAULT_SITE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const DEFAULT_SITE_DATA = DEFAULT_SITE
+// function SiteSettings({ data, setData }) {
+//   const [form, setForm] = useState({ ...data })
+//   const [saved, setSaved] = useState(false)
+//   const [activeTab, setTab] = useState("home")
+//   const handle = e => setForm({ ...form, [e.target.name]: e.target.value })
+//   const submit = () => {
+//     setData(form); save("siteSettings", form)
+//     setSaved(true); setTimeout(() => setSaved(false), 3000)
+//   }
+
+// const saveAll = () => {
+//     setData(form);
+//     save("siteSettings", form);        // localStorage mein save
+//     alert("✅ Changes Saved! Refresh the Home Page to see updates.");
+// };
+
+
+
+//   const reset = () => {
+//     if (!confirm("Reset all settings to default?")) return
+//     setData(DEFAULT_SITE_DATA); setForm({ ...DEFAULT_SITE_DATA }); save("siteSettings", DEFAULT_SITE_DATA)
+//   }
+//   const tabs = [
+//     { key: "home",    label: "🏠 Home"       },
+//     { key: "about",   label: "ℹ️ About"      },
+//     { key: "contact", label: "📞 Contact"    },
+//     { key: "general", label: "⚙️ General"    },
+//     { key: "features",label: "✨ Features"   },
+//     { key: "social",  label: "🔗 Social"     },
+//     { key: "images",  label: "🖼️ Images"    },
+//     { key: "seo",     label: "🔍 SEO"        },
+//   ]
+//   const TA = ({ label, name, rows = 3 }) => (
+//     <div style={{ marginBottom: 16 }}>
+//       <label style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", marginBottom: 6 }}>{label}</label>
+//       <textarea name={name} value={form[name] || ""} onChange={handle} rows={rows}
+//         style={{ width: "100%", padding: "11px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "var(--text)", fontFamily: "'DM Sans',sans-serif", fontSize: 14, outline: "none", resize: "vertical", boxSizing: "border-box" }} />
+//     </div>
+//   )
+//   const IN = ({ label, name, placeholder }) => <Field label={label} name={name} value={form[name] || ""} onChange={handle} placeholder={placeholder} />
+//   return (
+//     <>
+//       <SectionHeader title="Website Settings" subtitle="Edit all public website content — changes apply instantly on save" />
+//       {saved && (
+//         <div style={{ background: "rgba(74,222,128,0.12)", border: "1px solid rgba(74,222,128,0.3)", borderRadius: 8, padding: "12px 18px", marginBottom: 20, color: "#4ade80", fontSize: 14 }}>
+//           ✅ All changes saved! Reload the public website to see updates.
+//         </div>
+//       )}
+//       <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>
+//         {tabs.map(t => (
+//           <button key={t.key} onClick={() => setTab(t.key)} style={{
+//             padding: "8px 16px", borderRadius: 100, fontSize: 12, fontWeight: 600, cursor: "pointer",
+//             background: activeTab === t.key ? "var(--gold)" : "rgba(255,255,255,0.05)",
+//             color: activeTab === t.key ? "var(--dark)" : "var(--text-muted)",
+//             border: "1px solid " + (activeTab === t.key ? "var(--gold)" : "rgba(255,255,255,0.1)"),
+//             fontFamily: "'DM Sans',sans-serif", transition: "all 0.2s",
+//           }}>{t.label}</button>
+//         ))}
+//       </div>
+//       <div className="card" style={{ padding: 32 }}>
+//         {activeTab === "home" && (
+//           <>
+//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>🏠 Home Page Content</div>
+//             <IN label="Admission Badge Text"  name="heroBadge"  placeholder="e.g. Now Enrolling for 2025–26" />
+//             <IN label="Main Hero Heading"     name="tagline"    />
+//             <TA label="Hero Description"      name="heroDesc"   />
+//             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+//               <IN label="Admission Status (true/false)" name="admissionOpen" />
+//               <IN label="Admission Banner Message" name="admissionMsg" />
+//             </div>
+//             <IN label="CTA Section Badge"     name="ctaBadge"    />
+//             <IN label="CTA Section Title"     name="ctaTitle"    />
+//             <TA label="CTA Section Subtitle"  name="ctaSubtitle" rows={2} />
+//             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+//               <IN label="CTA Button 1 Text"   name="ctaBtn1" />
+//               <IN label="CTA Button 2 Text"   name="ctaBtn2" />
+//             </div>
+//             <div style={{ fontSize: 14, fontWeight: 600, color: "var(--cream)", margin: "20px 0 16px" }}>📊 Stats Bar</div>
+//             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+//               <IN label="Stat 1 Value" name="stat1Val" />
+//               <IN label="Stat 1 Label" name="stat1Label" />
+//               <IN label="Stat 2 Value" name="stat2Val" />
+//               <IN label="Stat 2 Label" name="stat2Label" />
+//               <IN label="Stat 3 Value" name="stat3Val" />
+//               <IN label="Stat 3 Label" name="stat3Label" />
+//               <IN label="Stat 4 Value" name="stat4Val" />
+//               <IN label="Stat 4 Label" name="stat4Label" />
+//             </div>
+//           </>
+//         )}
+//         {activeTab === "about" && (
+//           <>
+//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>ℹ️ About Page</div>
+//             <IN label="Section Heading"      name="aboutTitle" />
+//             <TA label="First Paragraph"      name="aboutDesc1" rows={3} />
+//             <TA label="Second Paragraph"     name="aboutDesc2" rows={3} />
+//             <TA label="Mission Statement"    name="aboutMission" rows={2} />
+//             <TA label="Vision Statement"     name="aboutVision"  rows={2} />
+//           </>
+//         )}
+//         {activeTab === "features" && (
+//           <>
+//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>✨ Why Choose Us (Features Section)</div>
+//             {[1, 2, 3, 4].map(n => (
+//               <div key={n} style={{ marginBottom: 20, padding: "16px 20px", background: "rgba(255,255,255,0.03)", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
+//                 <div style={{ fontSize: 13, fontWeight: 700, color: "var(--gold)", marginBottom: 12 }}>Feature {n}</div>
+//                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+//                   <IN label={`Title`}       name={`feat${n}Title`} />
+//                   <IN label={`Description`} name={`feat${n}Desc`}  />
+//                 </div>
+//               </div>
+//             ))}
+//           </>
+//         )}
+//         {activeTab === "contact" && (
+//           <>
+//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>📞 Contact Details</div>
+//             <TA label="Full Address" name="address" rows={2} />
+//             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+//               <IN label="Primary Phone"  name="phone"  />
+//               <IN label="Secondary Phone" name="phone2" />
+//               <IN label="Primary Email"  name="email"  />
+//               <IN label="Secondary Email" name="email2" />
+//             </div>
+//             <IN label="Office Hours"   name="hours"   />
+//             <IN label="WhatsApp Number (digits only)" name="whatsapp" placeholder="e.g. 9876543210" />
+//             <TA label="Google Maps Embed URL" name="mapEmbed" rows={2} />
+//           </>
+//         )}
+//         {activeTab === "general" && (
+//           <>
+//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>⚙️ General Branding</div>
+//             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+//               <IN label="School / Brand Name" name="schoolName"  />
+//               <IN label="Logo Text"           name="logoText"    />
+//             </div>
+//             <IN label="Logo Tagline"          name="logoTagline" />
+//             <TA label="Footer Description"    name="footerDesc"  rows={2} />
+//             <IN label="Footer Copyright Text" name="footerCopyright" />
+//             <div style={{ fontSize: 14, fontWeight: 600, color: "var(--cream)", margin: "20px 0 16px" }}>🔐 Login Page</div>
+//             <IN label="Login Page Title"    name="loginTitle"    />
+//             <IN label="Login Page Subtitle" name="loginSubtitle" />
+//             <TA label="Inspirational Quote" name="loginQuote"    rows={2} />
+//             <IN label="Quote Author"        name="loginAuthor"   />
+//           </>
+//         )}
+//         {activeTab === "social" && (
+//           <>
+//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>🔗 Social Media Links</div>
+//             <IN label="Facebook URL"  name="socialFacebook"  placeholder="https://facebook.com/yourpage" />
+//             <IN label="Instagram URL" name="socialInstagram" placeholder="https://instagram.com/yourpage" />
+//             <IN label="YouTube URL"   name="socialYoutube"   placeholder="https://youtube.com/yourchannel" />
+//             <IN label="Twitter / X URL" name="socialTwitter" placeholder="https://twitter.com/yourhandle" />
+//           </>
+//         )}
+//         {activeTab === "images" && (
+//           <>
+//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 8 }}>🖼️ Page Images & Backgrounds</div>
+//             <p style={{ fontSize: 13, color: "var(--text-muted)", marginBottom: 20, lineHeight: 1.6 }}>Paste any public image URL (Unsplash, Google Drive public link, Cloudinary, etc.)</p>
+//             {[
+//               { label: "Hero Background Image", name: "heroImage"  },
+//               { label: "About Page Image",       name: "aboutImage" },
+//               { label: "Login Page Background",  name: "loginBg"   },
+//             ].map(({ label, name }) => (
+//               <div key={name} style={{ marginBottom: 24 }}>
+//                 <IN label={label} name={name} />
+//                 {form[name] && (
+//                   <div style={{ height: 120, borderRadius: 8, backgroundImage: `url('${form[name]}')`, backgroundSize: "cover", backgroundPosition: "center", border: "1px solid rgba(201,168,76,0.2)", marginTop: 8 }} />
+//                 )}
+//               </div>
+//             ))}
+//           </>
+//         )}
+//         {activeTab === "seo" && (
+//           <>
+//             <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>🔍 SEO & Meta Settings</div>
+//             <IN label="Page Title (for browser tab)" name="metaTitle" placeholder="EduSphere – Shape Your Future" />
+//             <TA label="Meta Description (for Google)"  name="metaDesc"  rows={3} />
+//             <div style={{ padding: "12px 16px", background: "rgba(96,165,250,0.08)", borderRadius: 8, border: "1px solid rgba(96,165,250,0.2)", fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7 }}>
+//               ℹ️ These values are read by the website frontend to set <code style={{ color: "#60a5fa" }}>&lt;title&gt;</code> and <code style={{ color: "#60a5fa" }}>&lt;meta name="description"&gt;</code>. Make sure your website reads from <code style={{ color: "#60a5fa" }}>localStorage("siteSettings")</code>.
+//             </div>
+//           </>
+//         )}
+
+//         <div style={{ display: "flex", gap: 12, marginTop: 28, flexWrap: "wrap" }}>
+//           <button className="btn-primary" style={{ flex: 1, justifyContent: "center" }} onClick={submit}>💾 Save All Changes</button>
+//           <button className="btn-outline" style={{ justifyContent: "center" }} onClick={reset}>↺ Reset to Default</button>
+//         </div>
+//       </div>
+
+//       {/* Live Preview snippet */}
+//       <div className="card" style={{ padding: 24, marginTop: 20 }}>
+//         <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 16, color: "var(--cream)", marginBottom: 12 }}>👁️ Live Preview — Current Values</div>
+//         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 10 }}>
+//           {[
+//             { label: "School Name", val: form.schoolName },
+//             { label: "Tagline",     val: form.tagline },
+//             { label: "Admission",   val: form.admissionOpen === "true" ? "🟢 Open" : "🔴 Closed" },
+//             { label: "Phone",       val: form.phone },
+//             { label: "Email",       val: form.email },
+//             { label: "Address",     val: form.address },
+//           ].map((r, i) => (
+//             <div key={i} style={{ fontSize: 13, padding: "10px 14px", background: "rgba(255,255,255,0.03)", borderRadius: 8 }}>
+//               <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.5 }}>{r.label}: </span>
+//               <span style={{ color: "var(--text-muted)" }}>{r.val || "—"}</span>
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </>
+//   )
+// }
+
+
+
+
+
+
+
+const SS_TABS = [
+  { key:"hero",label:"🏠 Hero"},{ key:"counters",label:"🔢 Counters"},
+  { key:"features",label:"✨ Features"},{ key:"achievements",label:"🏆 Achievements"},
+  { key:"testimonials",label:"💬 Testimonials"},{ key:"team",label:"👨‍🏫 Team"},
+  { key:"events",label:"📅 Events"},{ key:"faq",label:"❓ FAQ"},
+  { key:"partners",label:"🤝 Partners"},{ key:"video",label:"🎬 Video"},
+  { key:"newsletter",label:"📬 Newsletter"},{ key:"cta",label:"📣 CTA Banner"},
+  { key:"about",label:"ℹ️ About"},{ key:"contact",label:"📞 Contact"},
+  { key:"general",label:"⚙️ General"},{ key:"social",label:"🔗 Social"},
+  { key:"images",label:"🖼️ Images"},{ key:"seo",label:"🔍 SEO"},
+]
+function SSField({ label, name, value, onChange, placeholder }) {
+  return (
+    <div style={{ marginBottom:16 }}>
+      <label style={{ display:"block", fontSize:11, fontWeight:700, letterSpacing:1, textTransform:"uppercase", color:"var(--gold)", marginBottom:6 }}>{label}</label>
+      <input name={name} value={value} onChange={onChange} placeholder={placeholder||""}
+        style={{ width:"100%", padding:"11px 14px", background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:8, color:"var(--text)", fontFamily:"'DM Sans',sans-serif", fontSize:14, outline:"none", boxSizing:"border-box" }} />
+    </div>
+  )
+}
+function SSTA({ label, name, value, onChange, rows=3 }) {
+  return (
+    <div style={{ marginBottom:16 }}>
+      <label style={{ display:"block", fontSize:11, fontWeight:700, letterSpacing:1, textTransform:"uppercase", color:"var(--gold)", marginBottom:6 }}>{label}</label>
+      <textarea name={name} value={value||""} onChange={onChange} rows={rows}
+        style={{ width:"100%", padding:"11px 14px", background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:8, color:"var(--text)", fontFamily:"'DM Sans',sans-serif", fontSize:14, outline:"none", resize:"vertical", boxSizing:"border-box" }} />
+    </div>
+  )
+}
+function SSCard({ children }) {
+  return <div style={{ marginBottom:20, padding:"16px 20px", background:"rgba(255,255,255,0.03)", borderRadius:10, border:"1px solid rgba(255,255,255,0.06)" }}>{children}</div>
+}
+function SSHead({ children }) {
+  return <div style={{ fontSize:14, fontWeight:700, color:"var(--cream)", margin:"24px 0 16px", paddingBottom:8, borderBottom:"1px solid rgba(255,255,255,0.06)" }}>{children}</div>
+}
 function SiteSettings({ data, setData }) {
   const [form, setForm] = useState({ ...data })
   const [saved, setSaved] = useState(false)
-  const [activeTab, setTab] = useState("home")
-  const handle = e => setForm({ ...form, [e.target.name]: e.target.value })
-  const submit = () => {
-    setData(form); save("siteSettings", form)
-    setSaved(true); setTimeout(() => setSaved(false), 3000)
-  }
-
-const saveAll = () => {
-    setData(form);
-    save("siteSettings", form);        // localStorage mein save
-    alert("✅ Changes Saved! Refresh the Home Page to see updates.");
-};
-
-
-
-  const reset = () => {
-    if (!confirm("Reset all settings to default?")) return
-    setData(DEFAULT_SITE_DATA); setForm({ ...DEFAULT_SITE_DATA }); save("siteSettings", DEFAULT_SITE_DATA)
-  }
-  const tabs = [
-    { key: "home",    label: "🏠 Home"       },
-    { key: "about",   label: "ℹ️ About"      },
-    { key: "contact", label: "📞 Contact"    },
-    { key: "general", label: "⚙️ General"    },
-    { key: "features",label: "✨ Features"   },
-    { key: "social",  label: "🔗 Social"     },
-    { key: "images",  label: "🖼️ Images"    },
-    { key: "seo",     label: "🔍 SEO"        },
-  ]
-  const TA = ({ label, name, rows = 3 }) => (
-    <div style={{ marginBottom: 16 }}>
-      <label style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", marginBottom: 6 }}>{label}</label>
-      <textarea name={name} value={form[name] || ""} onChange={handle} rows={rows}
-        style={{ width: "100%", padding: "11px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "var(--text)", fontFamily: "'DM Sans',sans-serif", fontSize: 14, outline: "none", resize: "vertical", boxSizing: "border-box" }} />
-    </div>
-  )
-  const IN = ({ label, name, placeholder }) => <Field label={label} name={name} value={form[name] || ""} onChange={handle} placeholder={placeholder} />
+  const [tab, setTab] = useState("hero")
+  const h = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+  const IN = ({ label, name, placeholder }) => <SSField label={label} name={name} value={form[name]||""} onChange={h} placeholder={placeholder} />
+  const TA = ({ label, name, rows }) => <SSTA label={label} name={name} value={form[name]||""} onChange={h} rows={rows} />
+  const Two = ({ children }) => <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0 16px" }}>{children}</div>
+  const submit = () => { setData(form); save("siteSettings", form); setSaved(true); setTimeout(()=>setSaved(false),3000) }
+  const reset = () => { if(!confirm("Reset all settings to default?"))return; setData(DEFAULT_SITE); setForm({...DEFAULT_SITE}); save("siteSettings",DEFAULT_SITE) }
   return (
     <>
-      <SectionHeader title="Website Settings" subtitle="Edit all public website content — changes apply instantly on save" />
-      {saved && (
-        <div style={{ background: "rgba(74,222,128,0.12)", border: "1px solid rgba(74,222,128,0.3)", borderRadius: 8, padding: "12px 18px", marginBottom: 20, color: "#4ade80", fontSize: 14 }}>
-          ✅ All changes saved! Reload the public website to see updates.
+      <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", flexWrap:"wrap", gap:12, marginBottom:28 }}>
+        <div>
+          <div style={{ fontFamily:"'Playfair Display',serif", fontSize:26, color:"var(--cream)", marginBottom:4 }}>Website Settings</div>
+          <div style={{ fontSize:13, color:"var(--text-muted)" }}>Edit all public website content — save to apply changes on the Home page</div>
         </div>
-      )}
-      <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>
-        {tabs.map(t => (
-          <button key={t.key} onClick={() => setTab(t.key)} style={{
-            padding: "8px 16px", borderRadius: 100, fontSize: 12, fontWeight: 600, cursor: "pointer",
-            background: activeTab === t.key ? "var(--gold)" : "rgba(255,255,255,0.05)",
-            color: activeTab === t.key ? "var(--dark)" : "var(--text-muted)",
-            border: "1px solid " + (activeTab === t.key ? "var(--gold)" : "rgba(255,255,255,0.1)"),
-            fontFamily: "'DM Sans',sans-serif", transition: "all 0.2s",
-          }}>{t.label}</button>
+      </div>
+      {saved && <div style={{ background:"rgba(74,222,128,0.12)", border:"1px solid rgba(74,222,128,0.3)", borderRadius:8, padding:"12px 18px", marginBottom:20, color:"#4ade80", fontSize:14 }}>✅ All changes saved! Reload the public website to see updates.</div>}
+      <div style={{ display:"flex", gap:6, marginBottom:28, flexWrap:"wrap" }}>
+        {SS_TABS.map(t => (
+          <button key={t.key} onClick={()=>setTab(t.key)} style={{ padding:"8px 14px", borderRadius:100, fontSize:12, fontWeight:600, cursor:"pointer", background:tab===t.key?"var(--gold)":"rgba(255,255,255,0.05)", color:tab===t.key?"var(--dark)":"var(--text-muted)", border:"1px solid "+(tab===t.key?"var(--gold)":"rgba(255,255,255,0.1)"), fontFamily:"'DM Sans',sans-serif", transition:"all 0.2s" }}>{t.label}</button>
         ))}
       </div>
-      <div className="card" style={{ padding: 32 }}>
-        {activeTab === "home" && (
-          <>
-            <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>🏠 Home Page Content</div>
-            <IN label="Admission Badge Text"  name="heroBadge"  placeholder="e.g. Now Enrolling for 2025–26" />
-            <IN label="Main Hero Heading"     name="tagline"    />
-            <TA label="Hero Description"      name="heroDesc"   />
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-              <IN label="Admission Status (true/false)" name="admissionOpen" />
-              <IN label="Admission Banner Message" name="admissionMsg" />
-            </div>
-            <IN label="CTA Section Badge"     name="ctaBadge"    />
-            <IN label="CTA Section Title"     name="ctaTitle"    />
-            <TA label="CTA Section Subtitle"  name="ctaSubtitle" rows={2} />
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-              <IN label="CTA Button 1 Text"   name="ctaBtn1" />
-              <IN label="CTA Button 2 Text"   name="ctaBtn2" />
-            </div>
-            <div style={{ fontSize: 14, fontWeight: 600, color: "var(--cream)", margin: "20px 0 16px" }}>📊 Stats Bar</div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-              <IN label="Stat 1 Value" name="stat1Val" />
-              <IN label="Stat 1 Label" name="stat1Label" />
-              <IN label="Stat 2 Value" name="stat2Val" />
-              <IN label="Stat 2 Label" name="stat2Label" />
-              <IN label="Stat 3 Value" name="stat3Val" />
-              <IN label="Stat 3 Label" name="stat3Label" />
-              <IN label="Stat 4 Value" name="stat4Val" />
-              <IN label="Stat 4 Label" name="stat4Label" />
-            </div>
-          </>
-        )}
-        {activeTab === "about" && (
-          <>
-            <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>ℹ️ About Page</div>
-            <IN label="Section Heading"      name="aboutTitle" />
-            <TA label="First Paragraph"      name="aboutDesc1" rows={3} />
-            <TA label="Second Paragraph"     name="aboutDesc2" rows={3} />
-            <TA label="Mission Statement"    name="aboutMission" rows={2} />
-            <TA label="Vision Statement"     name="aboutVision"  rows={2} />
-          </>
-        )}
-        {activeTab === "features" && (
-          <>
-            <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>✨ Why Choose Us (Features Section)</div>
-            {[1, 2, 3, 4].map(n => (
-              <div key={n} style={{ marginBottom: 20, padding: "16px 20px", background: "rgba(255,255,255,0.03)", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "var(--gold)", marginBottom: 12 }}>Feature {n}</div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-                  <IN label={`Title`}       name={`feat${n}Title`} />
-                  <IN label={`Description`} name={`feat${n}Desc`}  />
-                </div>
+      <div className="card" style={{ padding:32 }}>
+        {tab==="hero" && (<>
+          <SSHead>🏠 Hero Section</SSHead>
+          <IN label="Admission Badge Text" name="heroBadge" placeholder="Now Enrolling for 2025–26" />
+          <IN label="Hero Heading (before 'Future')" name="tagline" placeholder="Shape Your" />
+          <TA label="Hero Description" name="heroDesc" rows={3} />
+          <Two><IN label="Admission Open? (true/false)" name="admissionOpen" /><IN label="Admission Banner Message" name="admissionMsg" /></Two>
+          <SSHead>📊 Stats Bar</SSHead>
+          <Two>
+            <IN label="Stat 1 Value" name="stat1Val" /><IN label="Stat 1 Label" name="stat1Label" />
+            <IN label="Stat 2 Value" name="stat2Val" /><IN label="Stat 2 Label" name="stat2Label" />
+            <IN label="Stat 3 Value" name="stat3Val" /><IN label="Stat 3 Label" name="stat3Label" />
+            <IN label="Stat 4 Value" name="stat4Val" /><IN label="Stat 4 Label" name="stat4Label" />
+          </Two>
+        </>)}
+        {tab==="counters" && (<>
+          <SSHead>🔢 Animated Counter Stats (6)</SSHead>
+          {[1,2,3,4,5,6].map(n=>(
+            <SSCard key={n}>
+              <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>Counter {n}</div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:"0 12px" }}>
+                <IN label="End Number" name={`counter${n}End`} placeholder="5000" />
+                <IN label="Suffix" name={`counter${n}Suffix`} placeholder="+" />
+                <IN label="Icon" name={`counter${n}Icon`} placeholder="🎓" />
+                <IN label="Label" name={`counter${n}Label`} placeholder="Students Enrolled" />
               </div>
-            ))}
-          </>
-        )}
-        {activeTab === "contact" && (
-          <>
-            <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>📞 Contact Details</div>
-            <TA label="Full Address" name="address" rows={2} />
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-              <IN label="Primary Phone"  name="phone"  />
-              <IN label="Secondary Phone" name="phone2" />
-              <IN label="Primary Email"  name="email"  />
-              <IN label="Secondary Email" name="email2" />
-            </div>
-            <IN label="Office Hours"   name="hours"   />
-            <IN label="WhatsApp Number (digits only)" name="whatsapp" placeholder="e.g. 9876543210" />
-            <TA label="Google Maps Embed URL" name="mapEmbed" rows={2} />
-          </>
-        )}
-        {activeTab === "general" && (
-          <>
-            <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>⚙️ General Branding</div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-              <IN label="School / Brand Name" name="schoolName"  />
-              <IN label="Logo Text"           name="logoText"    />
-            </div>
-            <IN label="Logo Tagline"          name="logoTagline" />
-            <TA label="Footer Description"    name="footerDesc"  rows={2} />
-            <IN label="Footer Copyright Text" name="footerCopyright" />
-            <div style={{ fontSize: 14, fontWeight: 600, color: "var(--cream)", margin: "20px 0 16px" }}>🔐 Login Page</div>
-            <IN label="Login Page Title"    name="loginTitle"    />
-            <IN label="Login Page Subtitle" name="loginSubtitle" />
-            <TA label="Inspirational Quote" name="loginQuote"    rows={2} />
-            <IN label="Quote Author"        name="loginAuthor"   />
-          </>
-        )}
-        {activeTab === "social" && (
-          <>
-            <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>🔗 Social Media Links</div>
-            <IN label="Facebook URL"  name="socialFacebook"  placeholder="https://facebook.com/yourpage" />
-            <IN label="Instagram URL" name="socialInstagram" placeholder="https://instagram.com/yourpage" />
-            <IN label="YouTube URL"   name="socialYoutube"   placeholder="https://youtube.com/yourchannel" />
-            <IN label="Twitter / X URL" name="socialTwitter" placeholder="https://twitter.com/yourhandle" />
-          </>
-        )}
-        {activeTab === "images" && (
-          <>
-            <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 8 }}>🖼️ Page Images & Backgrounds</div>
-            <p style={{ fontSize: 13, color: "var(--text-muted)", marginBottom: 20, lineHeight: 1.6 }}>Paste any public image URL (Unsplash, Google Drive public link, Cloudinary, etc.)</p>
-            {[
-              { label: "Hero Background Image", name: "heroImage"  },
-              { label: "About Page Image",       name: "aboutImage" },
-              { label: "Login Page Background",  name: "loginBg"   },
-            ].map(({ label, name }) => (
-              <div key={name} style={{ marginBottom: 24 }}>
-                <IN label={label} name={name} />
-                {form[name] && (
-                  <div style={{ height: 120, borderRadius: 8, backgroundImage: `url('${form[name]}')`, backgroundSize: "cover", backgroundPosition: "center", border: "1px solid rgba(201,168,76,0.2)", marginTop: 8 }} />
-                )}
+            </SSCard>
+          ))}
+        </>)}
+        {tab==="features" && (<>
+          <SSHead>✨ Feature Cards (6)</SSHead>
+          {[1,2,3,4,5,6].map(n=>(
+            <SSCard key={n}>
+              <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>Feature {n}</div>
+              <div style={{ display:"grid", gridTemplateColumns:"80px 1fr 2fr", gap:"0 12px" }}>
+                <IN label="Icon" name={`feat${n}Icon`} placeholder="🎓" />
+                <IN label="Title" name={`feat${n}Title`} placeholder="Expert Faculty" />
+                <IN label="Description" name={`feat${n}Desc`} placeholder="Short description..." />
               </div>
-            ))}
-          </>
-        )}
-        {activeTab === "seo" && (
-          <>
-            <div style={{ fontSize: 16, fontWeight: 600, color: "var(--cream)", marginBottom: 20 }}>🔍 SEO & Meta Settings</div>
-            <IN label="Page Title (for browser tab)" name="metaTitle" placeholder="EduSphere – Shape Your Future" />
-            <TA label="Meta Description (for Google)"  name="metaDesc"  rows={3} />
-            <div style={{ padding: "12px 16px", background: "rgba(96,165,250,0.08)", borderRadius: 8, border: "1px solid rgba(96,165,250,0.2)", fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7 }}>
-              ℹ️ These values are read by the website frontend to set <code style={{ color: "#60a5fa" }}>&lt;title&gt;</code> and <code style={{ color: "#60a5fa" }}>&lt;meta name="description"&gt;</code>. Make sure your website reads from <code style={{ color: "#60a5fa" }}>localStorage("siteSettings")</code>.
+            </SSCard>
+          ))}
+        </>)}
+        {tab==="achievements" && (<>
+          <SSHead>🏆 Achievements (4)</SSHead>
+          {[1,2,3,4].map(n=>(
+            <SSCard key={n}>
+              <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>Achievement {n}</div>
+              <div style={{ display:"grid", gridTemplateColumns:"80px 80px 1fr", gap:"0 12px" }}>
+                <IN label="Icon" name={`ach${n}Icon`} placeholder="🥇" />
+                <IN label="Year" name={`ach${n}Year`} placeholder="2024" />
+                <IN label="Title" name={`ach${n}Title`} placeholder="Best Institution" />
+              </div>
+              <TA label="Description" name={`ach${n}Body`} rows={2} />
+            </SSCard>
+          ))}
+        </>)}
+        {tab==="testimonials" && (<>
+          <SSHead>💬 Testimonials (6)</SSHead>
+          {[1,2,3,4,5,6].map(n=>(
+            <SSCard key={n}>
+              <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>Testimonial {n}</div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 60px", gap:"0 12px" }}>
+                <IN label="Name" name={`test${n}Name`} placeholder="Priya Sharma" />
+                <IN label="Role" name={`test${n}Role`} placeholder="JEE Qualifier, IIT Delhi" />
+                <IN label="Avatar (initial)" name={`test${n}Avatar`} placeholder="P" />
+              </div>
+              <TA label="Testimonial Text" name={`test${n}Text`} rows={3} />
+            </SSCard>
+          ))}
+        </>)}
+        {tab==="team" && (<>
+          <SSHead>👨‍🏫 Team Members (6)</SSHead>
+          {[1,2,3,4,5,6].map(n=>(
+            <SSCard key={n}>
+              <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>Member {n}</div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0 12px" }}>
+                <IN label="Full Name" name={`team${n}Name`} placeholder="Dr. Rajesh Kumar" />
+                <IN label="Role" name={`team${n}Role`} placeholder="Principal & Founder" />
+                <IN label="Subject" name={`team${n}Subject`} placeholder="Physics" />
+                <IN label="Experience" name={`team${n}Exp`} placeholder="30+ yrs" />
+              </div>
+              <IN label="Avatar Initial" name={`team${n}Avatar`} placeholder="R" />
+            </SSCard>
+          ))}
+        </>)}
+        {tab==="events" && (<>
+          <SSHead>📅 Events (6)</SSHead>
+          {[1,2,3,4,5,6].map(n=>(
+            <SSCard key={n}>
+              <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>Event {n}</div>
+              <div style={{ display:"grid", gridTemplateColumns:"60px 60px 1fr", gap:"0 12px" }}>
+                <IN label="Date" name={`ev${n}Date`} placeholder="15" />
+                <IN label="Month" name={`ev${n}Month`} placeholder="Jan" />
+                <IN label="Title" name={`ev${n}Title`} placeholder="Science Exhibition" />
+              </div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"0 12px" }}>
+                <IN label="Time" name={`ev${n}Time`} placeholder="10:00 AM" />
+                <IN label="Venue" name={`ev${n}Venue`} placeholder="Main Hall" />
+                <IN label="Category" name={`ev${n}Cat`} placeholder="Academic" />
+              </div>
+            </SSCard>
+          ))}
+        </>)}
+        {tab==="faq" && (<>
+          <SSHead>❓ FAQ (6)</SSHead>
+          {[1,2,3,4,5,6].map(n=>(
+            <SSCard key={n}>
+              <div style={{ fontSize:13, fontWeight:700, color:"var(--gold)", marginBottom:12 }}>FAQ {n}</div>
+              <IN label="Question" name={`faq${n}Q`} placeholder="What courses does EduSphere offer?" />
+              <TA label="Answer" name={`faq${n}A`} rows={3} />
+            </SSCard>
+          ))}
+        </>)}
+        {tab==="partners" && (<>
+          <SSHead>🤝 Partners & Affiliates</SSHead>
+          <p style={{ fontSize:13, color:"var(--text-muted)", marginBottom:16, lineHeight:1.6 }}>Enter partner names separated by commas. These scroll in the marquee strip.</p>
+          <SSTA label="Partner Names (comma-separated)" name="partners" value={form.partners||""} onChange={h} rows={4} />
+          <div style={{ fontSize:12, color:"var(--text-muted)", marginTop:8 }}>Example: <em style={{ color:"var(--gold)" }}>IIT Delhi, AIIMS, CBSE Board, Coursera</em></div>
+        </>)}
+        {tab==="video" && (<>
+          <SSHead>🎬 Video Section</SSHead>
+          <IN label="Section Heading" name="videoHeading" placeholder="Experience Campus Life" />
+          <TA label="Section Description" name="videoDesc" rows={3} />
+          <IN label="YouTube Embed URL" name="videoUrl" placeholder="https://www.youtube.com/embed/VIDEO_ID" />
+          <div style={{ padding:"12px 16px", background:"rgba(96,165,250,0.08)", borderRadius:8, border:"1px solid rgba(96,165,250,0.2)", fontSize:13, color:"var(--text-muted)", lineHeight:1.7, marginTop:8 }}>
+            ℹ️ Use embed URL: <code style={{ color:"#60a5fa" }}>https://www.youtube.com/embed/VIDEO_ID</code> — not the regular watch URL.
+          </div>
+        </>)}
+        {tab==="newsletter" && (<>
+          <SSHead>📬 Newsletter Section</SSHead>
+          <IN label="Heading (before 'Newsletter')" name="newsletterTitle" placeholder="Subscribe to Our" />
+          <TA label="Description Text" name="newsletterDesc" rows={3} />
+        </>)}
+        {tab==="cta" && (<>
+          <SSHead>📣 CTA Banner</SSHead>
+          <IN label="Badge Text" name="ctaBadge" placeholder="Limited Seats Available" />
+          <IN label="Main Heading" name="ctaTitle" placeholder="Ready to Begin Your Journey?" />
+          <Two>
+            <IN label="Button 1 Text" name="ctaBtn1" placeholder="Apply Now →" />
+            <IN label="Button 2 Text" name="ctaBtn2" placeholder="Talk to Us" />
+          </Two>
+        </>)}
+        {tab==="about" && (<>
+          <SSHead>ℹ️ About Page</SSHead>
+          <IN label="Section Heading" name="aboutTitle" />
+          <TA label="First Paragraph" name="aboutDesc1" rows={3} />
+          <TA label="Second Paragraph" name="aboutDesc2" rows={3} />
+          <TA label="Mission Statement" name="aboutMission" rows={2} />
+          <TA label="Vision Statement" name="aboutVision" rows={2} />
+          <IN label="About Page Image URL" name="aboutImage" />
+          {form.aboutImage && <div style={{ height:120, borderRadius:8, backgroundImage:`url('${form.aboutImage}')`, backgroundSize:"cover", backgroundPosition:"center", border:"1px solid rgba(201,168,76,0.2)", marginTop:8 }} />}
+        </>)}
+        {tab==="contact" && (<>
+          <SSHead>📞 Contact Details</SSHead>
+          <TA label="Full Address" name="address" rows={2} />
+          <Two>
+            <IN label="Primary Phone" name="phone" /><IN label="Secondary Phone" name="phone2" />
+            <IN label="Primary Email" name="email" /><IN label="Secondary Email" name="email2" />
+          </Two>
+          <IN label="Office Hours" name="hours" />
+          <IN label="WhatsApp Number (digits only)" name="whatsapp" placeholder="9876543210" />
+          <TA label="Google Maps Embed URL" name="mapEmbed" rows={2} />
+        </>)}
+        {tab==="general" && (<>
+          <SSHead>⚙️ General Branding</SSHead>
+          <Two>
+            <IN label="School / Brand Name" name="schoolName" />
+            <IN label="Logo Text" name="logoText" />
+          </Two>
+          <IN label="Logo Tagline" name="logoTagline" />
+          <TA label="Footer Description" name="footerDesc" rows={2} />
+          <IN label="Footer Copyright Text" name="footerCopyright" />
+          <SSHead>🔐 Login Page</SSHead>
+          <IN label="Login Page Title" name="loginTitle" />
+          <IN label="Login Page Subtitle" name="loginSubtitle" />
+          <TA label="Inspirational Quote" name="loginQuote" rows={2} />
+          <IN label="Quote Author" name="loginAuthor" />
+        </>)}
+        {tab==="social" && (<>
+          <SSHead>🔗 Social Media Links</SSHead>
+          <IN label="Facebook URL" name="socialFacebook" placeholder="https://facebook.com/yourpage" />
+          <IN label="Instagram URL" name="socialInstagram" placeholder="https://instagram.com/yourpage" />
+          <IN label="YouTube URL" name="socialYoutube" placeholder="https://youtube.com/yourchannel" />
+          <IN label="Twitter / X URL" name="socialTwitter" placeholder="https://twitter.com/yourhandle" />
+        </>)}
+        {tab==="images" && (<>
+          <SSHead>🖼️ Images & Backgrounds</SSHead>
+          <p style={{ fontSize:13, color:"var(--text-muted)", marginBottom:20, lineHeight:1.6 }}>Paste any public image URL (Unsplash, Cloudinary, etc.)</p>
+          {[{label:"Hero Background Image",name:"heroImage"},{label:"Login Page Background",name:"loginBg"}].map(({label,name})=>(
+            <div key={name} style={{ marginBottom:24 }}>
+              <SSField label={label} name={name} value={form[name]||""} onChange={h} />
+              {form[name] && <div style={{ height:120, borderRadius:8, backgroundImage:`url('${form[name]}')`, backgroundSize:"cover", backgroundPosition:"center", border:"1px solid rgba(201,168,76,0.2)", marginTop:8 }} />}
             </div>
-          </>
-        )}
-
-        <div style={{ display: "flex", gap: 12, marginTop: 28, flexWrap: "wrap" }}>
-          <button className="btn-primary" style={{ flex: 1, justifyContent: "center" }} onClick={submit}>💾 Save All Changes</button>
-          <button className="btn-outline" style={{ justifyContent: "center" }} onClick={reset}>↺ Reset to Default</button>
+          ))}
+        </>)}
+        {tab==="seo" && (<>
+          <SSHead>🔍 SEO & Meta</SSHead>
+          <IN label="Page Title (browser tab)" name="metaTitle" placeholder="EduSphere – Shape Your Future" />
+          <TA label="Meta Description (Google)" name="metaDesc" rows={3} />
+        </>)}
+        <div style={{ display:"flex", gap:12, marginTop:32, flexWrap:"wrap" }}>
+          <button className="btn-primary" style={{ flex:1, justifyContent:"center" }} onClick={submit}>💾 Save All Changes</button>
+          <button className="btn-outline" style={{ justifyContent:"center" }} onClick={reset}>↺ Reset to Default</button>
         </div>
       </div>
-
-      {/* Live Preview snippet */}
-      <div className="card" style={{ padding: 24, marginTop: 20 }}>
-        <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 16, color: "var(--cream)", marginBottom: 12 }}>👁️ Live Preview — Current Values</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 10 }}>
+      <div className="card" style={{ padding:24, marginTop:20 }}>
+        <div style={{ fontFamily:"'Playfair Display',serif", fontSize:16, color:"var(--cream)", marginBottom:12 }}>👁️ Live Preview</div>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:10 }}>
           {[
-            { label: "School Name", val: form.schoolName },
-            { label: "Tagline",     val: form.tagline },
-            { label: "Admission",   val: form.admissionOpen === "true" ? "🟢 Open" : "🔴 Closed" },
-            { label: "Phone",       val: form.phone },
-            { label: "Email",       val: form.email },
-            { label: "Address",     val: form.address },
-          ].map((r, i) => (
-            <div key={i} style={{ fontSize: 13, padding: "10px 14px", background: "rgba(255,255,255,0.03)", borderRadius: 8 }}>
-              <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.5 }}>{r.label}: </span>
-              <span style={{ color: "var(--text-muted)" }}>{r.val || "—"}</span>
+            {label:"School Name", val:form.schoolName},
+            {label:"Tagline", val:form.tagline},
+            {label:"Admission", val:form.admissionOpen==="true"?"🟢 Open":"🔴 Closed"},
+            {label:"Phone", val:form.phone},
+            {label:"Email", val:form.email},
+            {label:"Features", val:[1,2,3,4,5,6].map(n=>form[`feat${n}Title`]).filter(Boolean).join(", ")},
+            {label:"Partners", val:(form.partners||"").split(",").length+" partners"},
+            {label:"FAQ Count", val:[1,2,3,4,5,6].filter(n=>form[`faq${n}Q`]).length+" questions"},
+            {label:"Video", val:form.videoUrl?"✅ Set":"❌ Not set"},
+            {label:"Hero Image", val:form.heroImage?"✅ Set":"❌ Not set"},
+          ].map((r,i)=>(
+            <div key={i} style={{ fontSize:13, padding:"10px 14px", background:"rgba(255,255,255,0.03)", borderRadius:8 }}>
+              <span style={{ color:"var(--gold)", fontWeight:700, fontSize:11, textTransform:"uppercase", letterSpacing:0.5 }}>{r.label}: </span>
+              <span style={{ color:"var(--text-muted)" }}>{r.val||"—"}</span>
             </div>
           ))}
         </div>
@@ -2879,6 +4281,9 @@ const saveAll = () => {
     </>
   )
 }
+
+
+
 
 /* ══════════════════════════════════════════════════════════════
    MAIN AdminDashboard
@@ -2977,7 +4382,7 @@ export default function AdminDashboard() {
         {active === "notices"   && <Notices   data={notices}   setData={setNotices}  />}
         {active === "gallery"   && <Gallery   data={gallery}   setData={setGallery}  />}
         {active === "fees"      && <Fees      data={fees}      setData={setFees}     students={students} courses={courses} />}
-        {active === "settings"  && <SiteSettings data={site}   setData={setSite}     />}
+        {active === "settings"  && <SiteSettings data={site} setData={setSite} />}
       </div>
       <style>{`
         @media (max-width: 900px) {
