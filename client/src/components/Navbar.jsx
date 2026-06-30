@@ -109,6 +109,12 @@ function Navbar() {
     navigate("/")
   }
 
+  const goToDashboard = () => {
+  if (user.role === "admin")        navigate("/admin-dashboard")
+  else if (user.role === "teacher") navigate("/teacher-dashboard")
+  else if (user.role === "student") navigate("/student-dashboard")
+}
+
   const links = [
     { to: "/",         label: "Home"     },
     { to: "/about",    label: "About"    },
@@ -120,9 +126,16 @@ function Navbar() {
 
   // ── Username + Logout button ──
   const UserSection = () => (
-    <div className="nav-user">
-      <span className="nav-username">👤 {user.name}</span>
-      <button className="nav-logout-btn" onClick={handleLogout} title="Logout">
+  <div className="nav-user">
+    <span
+      className="nav-username"
+      onClick={goToDashboard}
+      style={{ cursor: "pointer" }}
+      title="Go to Dashboard"
+    >
+      👤 {user.name}
+    </span>
+    <button className="nav-logout-btn" onClick={handleLogout} title="Logout">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
           viewBox="0 0 24 24" fill="none" stroke="currentColor"
           strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

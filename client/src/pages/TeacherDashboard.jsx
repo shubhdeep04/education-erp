@@ -852,22 +852,52 @@ export default function TeacherDashboard() {
   const navigate   = useNavigate()
   const [active,   setActive]   = useState("overview")
   const [mobileMenu, setMobileMenu] = useState(false)
-  const user = (() => { try { return JSON.parse(localStorage.getItem("user") || "{}") } catch { return {} } })()
+
+  // .....
+ const [user, setUser] = useState(null)
+
+ useEffect(() => {
+  const fetchUser = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/me", { credentials: "include" })
+      const data = await res.json()
+      if (data.success) setUser(data.user)
+      else navigate("/login")
+    } catch {
+      navigate("/login")
+    }
+  }
+  fetchUser()
+}, [])
+// ...
 
   const Sidebar = () => (
     <div style={{ padding:"0 16px" }}>
       <div style={{ padding:"0 4px 20px", borderBottom:"1px solid rgba(255,255,255,0.06)", marginBottom:20 }}>
-        <div style={{ fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"var(--text-muted)", marginBottom:6 }}>Logged in as</div>
-        <div style={{ fontWeight:700, color:"#a78bfa", fontSize:15 }}>Teacher Portal</div>
-        <div style={{ fontSize:12, color:"var(--text-muted)", marginTop:4 }}>{user?.name||""}</div>
-      </div>
+        <div
+  onClick={() => setActive("overview")}
+  style={{ display:"flex", alignItems:"center", gap:10, cursor:"pointer" }}
+  title="Go to Dashboard"
+>
+  <div style={{
+    width:38, height:38, borderRadius:"50%",
+    background:"rgba(167,139,250,0.15)",
+    border:"1.5px solid rgba(167,139,250,0.4)",
+    display:"flex", alignItems:"center", justifyContent:"center",
+    fontSize:18, color:"#a78bfa", flexShrink:0
+  }}>👤</div>
+  <div>
+    <div style={{ fontWeight:700, color:"#a78bfa", fontSize:14 }}>{user?.name || "Teacher"}</div>
+    <div style={{ fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"var(--text-muted)" }}>Teacher Portal</div>
+  </div>
+</div>      </div>
       {MENU.map(item => (
         <div key={item.key} onClick={()=>{ setActive(item.key); setMobileMenu(false) }} style={{ display:"flex", alignItems:"center", gap:12, padding:"11px 12px", borderRadius:8, marginBottom:2, cursor:"pointer", fontSize:14, fontWeight:500, background:active===item.key?"rgba(167,139,250,0.12)":"transparent", color:active===item.key?"#a78bfa":"var(--text-muted)", transition:"all 0.2s" }}>
           <span style={{ fontSize:17, width:24, textAlign:"center" }}>{item.icon}</span>{item.label}
         </div>
       ))}
       <div style={{ marginTop:24, paddingTop:20, borderTop:"1px solid rgba(255,255,255,0.06)" }}>
-        <div onClick={()=>{ localStorage.removeItem("token"); localStorage.removeItem("user"); navigate("/login") }} style={{ display:"flex", alignItems:"center", gap:12, padding:"11px 12px", borderRadius:8, cursor:"pointer", fontSize:14, color:"#f87171" }}>
+        <div onClick={async ()=>{ await fetch("http://localhost:5000/api/auth/logout", { method:"POST", credentials:"include" }); navigate("/login") }} style={{ display:"flex", alignItems:"center", gap:12, padding:"11px 12px", borderRadius:8, cursor:"pointer", fontSize:14, color:"#f87171" }}>
           <span style={{ fontSize:17, width:24, textAlign:"center" }}>🚪</span>Sign Out
         </div>
       </div>
