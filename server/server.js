@@ -10,6 +10,17 @@ import studentRoutes from "./routes/studentRoutes.js";
 import teacherRoutes from "./routes/teacherRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 
+
+import superAdminRoutes from "./routes/superAdminRoutes.js";
+
+
+import seedRoute from "./routes/seedRoute.js";
+
+
+import instituteRoutes from "./routes/instituteRoutes.js";
+
+
+
 dotenv.config();
 
 const app = express();
@@ -31,6 +42,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/super-admin", superAdminRoutes);
+app.use("/api/seed", seedRoute);
+app.use("/api/superadmin", instituteRoutes);
+
+
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("✅ MongoDB Connected"))
@@ -40,3 +56,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`✅ Server running on http://localhost:${PORT}`);
 });
+
+
+
+
