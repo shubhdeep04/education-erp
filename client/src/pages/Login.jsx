@@ -1,6 +1,6 @@
 
 
-// // export default Login
+// export default Login
 // import { useState } from "react"
 // import { useNavigate } from "react-router-dom"
 
@@ -23,6 +23,21 @@
 //       })
 //       const data = await response.json()
 //       if (data.success) {
+//   localStorage.setItem("token", data.token);
+//   localStorage.setItem("user", JSON.stringify(data.user));
+
+//   if (data.user.role === "superadmin") {
+//     navigate("/super-admin/dashboard");
+//   } else if (data.user.role === "admin") {
+//     navigate("/admin-dashboard");
+//   } else if (data.user.role === "teacher") {
+//     navigate("/teacher-dashboard");
+//   } else if (data.user.role === "student") {
+//     navigate("/student-dashboard");
+//   } else {
+//     alert("Unknown user role: " + data.user.role);
+//   }
+
 //         localStorage.setItem("token", data.token)
 //         localStorage.setItem("user", JSON.stringify(data.user))
 //         if (data.user.role === "admin")        navigate("/admin-dashboard")
@@ -164,12 +179,17 @@
 
 
 
+
+
+
+
+
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 
 export default function Login() {
-  const [role, setRole]       = useState("student")
-  const [form, setForm]       = useState({ email: "", password: "" })
+  const [role, setRole]     = useState("student")
+  const [form, setForm]     = useState({ email: "", password: "", instituteCode: "" })
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -179,9 +199,36 @@ export default function Login() {
     e.preventDefault()
     try {
       setLoading(true)
+
+      // Super Admin logs in via the master DB — no institute code needed.
+      // Everyone else (admin/teacher/student) needs their institute code.
+      const payload =
+        role === "superadmin"
+          ? { email: form.email, password: form.password }
+          : { email: form.email, password: form.password, instituteCode: form.instituteCode }
+
       const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+      const data = await response.json()
+      if (data.success) {
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("user", JSON.stringify(data.user));
+
+  if (data.user.role === "superadmin") {
+    navigate("/super-admin/dashboard");
+  } else if (data.user.role === "admin") {
+    navigate("/admin-dashboard");
+  } else if (data.user.role === "teacher") {
+    navigate("/teacher-dashboard");
+  } else if (data.user.role === "student") {
+    navigate("/student-dashboard");
+  } else {
+    alert("Unknown user role: " + data.user.role);
+  }
+
         body: JSON.stringify(form),
         credentials: "include", // ✅ cookie receive ke liye
       })
@@ -219,11 +266,13 @@ export default function Login() {
           <div className="login-logo">Edu<span>●</span>Sphere</div>
           <div className="login-subtitle">Sign in to your portal</div>
 
+          {/* Role Tabs */}
           <div className="role-tabs">
             {[
               { key: "student", label: "🎓 Student" },
               { key: "teacher", label: "📖 Teacher" },
               { key: "admin",   label: "⚙️ Admin"   },
+              { key: "superadmin", label: "🛡️ Super Admin" },
             ].map(r => (
               <button
                 key={r.key}
@@ -237,6 +286,23 @@ export default function Login() {
           </div>
 
           <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column" }}>
+
+            {/* Institute Code — only needed for institute-scoped roles */}
+            {role !== "superadmin" && (
+              <div className="form-group">
+                <label className="form-label">Institute Code</label>
+                <input
+                  className="form-input"
+                  type="text"
+                  name="instituteCode"
+                  value={form.instituteCode}
+                  onChange={handle}
+                  placeholder="e.g. bright-futures-academy"
+                  required
+                />
+              </div>
+            )}
+
             <div className="form-group">
               <label className="form-label">Email Address</label>
               <input

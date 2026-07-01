@@ -19,6 +19,98 @@
 // import AdminDashboard from "./pages/AdminDashboard";
 // import StudentDashboard from "./pages/StudentDashboard";
 // import TeacherDashboard from "./pages/TeacherDashboard";
+// import SuperAdminDashboard from "./pages/SuperAdminDashboard"
+
+// // Routes mein add karo:
+
+
+// import "./styles/global.css";
+
+// function App() {
+//   return (
+//     <BrowserRouter>
+//       <Navbar />
+
+//       <Routes>
+//         <Route
+//           path="/"
+//           element={<Home />}
+//         />
+
+//         <Route
+//           path="/about"
+//           element={<About />}
+//         />
+
+
+// <Route path="/admin" element={<AdminDashboard />} />
+
+
+
+// <Route
+//   path="/super-admin/dashboard"
+//   element={<SuperAdminDashboard />}
+// />
+
+
+
+
+
+//         <Route
+//           path="/courses"
+//           element={<Courses />}
+//         />
+
+//         <Route
+//           path="/services"
+//           element={<Services />}
+//         />
+
+//         <Route
+//           path="/gallery"
+//           element={<Gallery />}
+//         />
+
+//         <Route
+//           path="/contact"
+//           element={<Contact />}
+//         />
+
+//         <Route
+//           path="/login"
+//           element={<Login />}
+//         />
+
+//         <Route
+//           path="/admin-dashboard"
+//           element={<AdminDashboard />}
+//         />
+
+//         <Route
+//           path="/student-dashboard"
+//           element={<StudentDashboard />}
+//         />
+//         <Route
+//           path="/teacher-dashboard"
+//             element={<TeacherDashboard />}
+//             />
+        
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
+// export default App;
+
+
+
+
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 
 
 // import "./styles/global.css";
@@ -89,6 +181,19 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
+import AdminDashboard from "./pages/AdminDashboard";
+import StudentDashboard from "./pages/StudentDashboard";
+import TeacherDashboard from "./pages/TeacherDashboard";
+import SuperAdminDashboard from "./pages/SuperAdminDashboard"
+
+import FeatureDetail from "./pages/FeatureDetail"
+import EventDetail from "./pages/EventDetail"
+
+
+
+
+
+
 import Navbar from "./components/Navbar"
 import ProtectedRoute from "./components/ProtectedRoute"  // ✅ new
 
@@ -107,11 +212,44 @@ import TeacherDashboard from "./pages/TeacherDashboard"
 
 import "./styles/global.css"
 
-function App() {
+// Wrapper to conditionally hide the public Navbar on Super Admin routes
+// (Super Admin Dashboard has its own self-contained sidebar/UI, so the
+// global Navbar should never render on top of it — this fixes overlap).
+function Layout() {
+  const location = useLocation();
+  const hideNavbar = location.pathname.startsWith("/super-admin");
+
   return (
-    <BrowserRouter>
-      <Navbar />
+    <>
+      {!hideNavbar && <Navbar />}
+
       <Routes>
+        <Route
+          path="/"
+          element={<Home />}
+        />
+
+        <Route
+          path="/about"
+          element={<About />}
+        />
+
+        <Route path="/admin" element={<AdminDashboard />} />
+
+        <Route
+          path="/super-admin/dashboard"
+          element={<SuperAdminDashboard />}
+        />
+
+        <Route
+          path="/courses"
+          element={<Courses />}
+        />
+
+        <Route
+          path="/services"
+          element={<Services />}
+        />
 
         {/* ── Public Routes ── */}
         <Route path="/"        element={<Home />}     />
@@ -142,6 +280,17 @@ function App() {
           }
         />
 
+
+<Route path="/features/:slug" element={<FeatureDetail />} />
+
+<Route path="/events/:slug" element={<EventDetail />} />
+
+
+
+
+
+
+
         <Route
           path="/student-dashboard"
           element={
@@ -150,8 +299,20 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/teacher-dashboard"
+          element={<TeacherDashboard />}
+        />
 
       </Routes>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Layout />
     </BrowserRouter>
   )
 }

@@ -26,7 +26,8 @@ import {
 } from "../controllers/authController.js"
 import { protect } from "../middleware/authMiddleware.js" // ✅ new
 
-const router = express.Router()
+// Register User
+router.post("/register", registerUser);
 
 router.post("/register", registerUser)
 router.post("/login",    loginUser)
