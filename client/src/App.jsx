@@ -126,6 +126,16 @@ import StudentDashboard from "./pages/StudentDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import SuperAdminDashboard from "./pages/SuperAdminDashboard"
 
+import FeatureDetail from "./pages/FeatureDetail"
+import EventDetail from "./pages/EventDetail"
+
+
+
+
+
+
+
+
 import "./styles/global.css";
 
 // Wrapper to conditionally hide the public Navbar on Super Admin routes
@@ -186,6 +196,17 @@ function Layout() {
           path="/admin-dashboard"
           element={<AdminDashboard />}
         />
+
+
+<Route path="/features/:slug" element={<FeatureDetail />} />
+
+<Route path="/events/:slug" element={<EventDetail />} />
+
+
+
+
+
+
 
         <Route
           path="/student-dashboard"
