@@ -463,3 +463,37 @@ footer {
 .stat-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--gold); display: block; }
 .stat-label { font-size: 13px; color: var(--text-muted); letter-spacing: 0.5px; margin-top: 4px; }
 .section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
+
+
+
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-username {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.nav-logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1.5px solid rgba(201, 168, 76, 0.4);
+  border-radius: 8px;
+  padding: 6px 8px;
+  color: var(--gold);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.nav-logout-btn:hover {
+  background: rgba(201, 168, 76, 0.12);
+  border-color: var(--gold);
+}

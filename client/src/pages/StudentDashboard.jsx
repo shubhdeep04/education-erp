@@ -1,4 +1,4 @@
-//  
+
 
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
@@ -836,15 +836,47 @@ export default function StudentDashboard() {
   const navigate  = useNavigate()
   const [active, setActive]   = useState("overview")
   const [sideOpen, setSideOpen] = useState(false)
-  const user = JSON.parse(localStorage.getItem("user") || "{}")
+
+
+  // ....
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+  const fetchUser = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/me", { credentials: "include" })
+      const data = await res.json()
+      if (data.success) setUser(data.user)
+      else navigate("/login")
+    } catch {
+      navigate("/login")
+    }
+  }
+  fetchUser()
+}, [])
+
+// ...
 
   const sidebarContent = (
     <div style={{ padding: "0 16px" }}>
       <div style={{ padding: "0 4px 20px", borderBottom: "1px solid rgba(255,255,255,0.06)", marginBottom: 20 }}>
-        <div style={{ fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 6 }}>Logged in as</div>
-        <div style={{ fontWeight: 700, color: "#60a5fa", fontSize: 15 }}>Student Portal</div>
-        <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 4 }}>{user?.name || ""}</div>
-      </div>
+       <div
+  onClick={() => setActive("overview")}
+  style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}
+  title="Go to Dashboard"
+>
+  <div style={{
+    width: 38, height: 38, borderRadius: "50%",
+    background: "rgba(96,165,250,0.15)",
+    border: "1.5px solid rgba(96,165,250,0.4)",
+    display: "flex", alignItems: "center", justifyContent: "center",
+    fontSize: 18, color: "#60a5fa", flexShrink: 0
+  }}>👤</div>
+  <div>
+    <div style={{ fontWeight: 700, color: "#60a5fa", fontSize: 14 }}>{user?.name || "Student"}</div>
+    <div style={{ fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "var(--text-muted)" }}>Student Portal</div>
+  </div>
+</div>      </div>
 
       {MENU.map(item => (
         <div key={item.key}
@@ -864,7 +896,7 @@ export default function StudentDashboard() {
       ))}
 
       <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <div onClick={() => { localStorage.removeItem("token"); localStorage.removeItem("user"); navigate("/login") }}
+        <div onClick={async () => { await fetch("http://localhost:5000/api/auth/logout", { method: "POST", credentials: "include" }); navigate("/login") }}
           style={{ display: "flex", alignItems: "center", gap: 12, padding: "11px 12px", borderRadius: 8, cursor: "pointer", fontSize: 14, color: "#f87171" }}>
           <span style={{ fontSize: 17, width: 24, textAlign: "center" }}>🚪</span>Sign Out
         </div>

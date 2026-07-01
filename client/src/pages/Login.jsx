@@ -38,6 +38,11 @@
 //     alert("Unknown user role: " + data.user.role);
 //   }
 
+//         localStorage.setItem("token", data.token)
+//         localStorage.setItem("user", JSON.stringify(data.user))
+//         if (data.user.role === "admin")        navigate("/admin-dashboard")
+//         else if (data.user.role === "teacher") navigate("/teacher-dashboard")
+//         else if (data.user.role === "student") navigate("/student-dashboard")
 //       } else {
 //         alert(data.message)
 //       }
@@ -180,7 +185,7 @@
 
 
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 
 export default function Login() {
   const [role, setRole]     = useState("student")
@@ -224,6 +229,15 @@ export default function Login() {
     alert("Unknown user role: " + data.user.role);
   }
 
+        body: JSON.stringify(form),
+        credentials: "include", // ✅ cookie receive ke liye
+      })
+      const data = await response.json()
+      if (data.success) {
+        // ✅ localStorage hataya — cookie automatically set ho gayi
+        if (data.user.role === "admin")        navigate("/admin-dashboard")
+        else if (data.user.role === "teacher") navigate("/teacher-dashboard")
+        else if (data.user.role === "student") navigate("/student-dashboard")
       } else {
         alert(data.message)
       }
@@ -238,7 +252,6 @@ export default function Login() {
   return (
     <div className="login-page" style={{ paddingTop: "var(--nav-h)" }}>
 
-      {/* ── Left Visual ── */}
       <div className="login-visual">
         <div className="login-visual-content">
           <div className="login-quote">
@@ -248,7 +261,6 @@ export default function Login() {
         </div>
       </div>
 
-      {/* ── Right Form ── */}
       <div className="login-form-side">
         <div className="login-box fade-up">
           <div className="login-logo">Edu<span>●</span>Sphere</div>
@@ -338,11 +350,36 @@ export default function Login() {
             </button>
           </form>
 
+          <div style={{
+            marginTop: 28,
+            padding: "16px 20px",
+            background: "rgba(201,168,76,0.06)",
+            border: "1px solid rgba(201,168,76,0.15)",
+            borderRadius: 10,
+          }}>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "var(--gold)", marginBottom: 10 }}>
+              Demo Credentials
+            </div>
+            {[
+              { role: "Admin",   email: "admin1@gmail.com"    },
+              { role: "Teacher", email: "teacher43@gmail.com" },
+              { role: "Student", email: "student12@gmail.com" },
+            ].map(c => (
+              <div key={c.role} style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "var(--text-muted)", marginBottom: 6 }}>
+                <span style={{ color: "var(--cream)", fontWeight: 500 }}>{c.role}</span>
+                <span>{c.email}</span>
+              </div>
+            ))}
+            <div style={{ marginTop: 10, fontSize: 13, color: "#fbbf24", textAlign: "center" }}>
+              🔑 Password for all: <strong>123456</strong>
+            </div>
+          </div>
+
           <p style={{ textAlign: "center", marginTop: 20, fontSize: 14, color: "var(--text-muted)" }}>
             New here?{" "}
-            <a href="#" style={{ color: "var(--gold)", textDecoration: "none" }}>
-              Contact admissions →
-            </a>
+           <Link to="/register" style={{ color: "var(--gold)", textDecoration: "none" }}>
+  Create a new account →
+</Link>
           </p>
         </div>
       </div>
