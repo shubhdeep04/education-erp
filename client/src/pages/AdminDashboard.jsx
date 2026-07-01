@@ -2131,7 +2131,10 @@ const MENU = [
   { key: "events",     icon: "🎉", label: "Events"           },
   { key: "notices",    icon: "📢", label: "Notices"          },
   { key: "gallery",    icon: "🖼️", label: "Gallery"          },
-  { key: "fees",       icon: "💰", label: "Fees"             },
+  { key: "fees",       icon: "💰", label: "Fees"  },
+
+  { key: "enrollments", icon: "📋", label: "Enrollments" },
+              
   { key: "settings",   icon: "⚙️", label: "Website Settings" },
 ]
 
@@ -2149,6 +2152,28 @@ export default function AdminDashboard() {
   const [events,    setEvents]    = useState(() => load("events",    DEFAULT_EVENTS))
   const [site,      setSite]      = useState(() => load("siteSettings", DEFAULT_SITE))
   const [sideOpen,  setSideOpen]  = useState(false)
+
+const [enrollments, setEnrollments] = useState([])
+const [enrollLoading, setEnrollLoading] = useState(false)
+
+useEffect(() => {
+  if (active === "enrollments") {
+    const fetchEnrollments = async () => {
+      setEnrollLoading(true)
+      try {
+        const res  = await fetch("http://localhost:5000/api/enrollment/all", { credentials: "include" })
+        const data = await res.json()
+        if (data.success) setEnrollments(data.enrollments)
+      } catch {
+        console.log("Enrollment fetch error")
+      } finally {
+        setEnrollLoading(false)
+      }
+    }
+    fetchEnrollments()
+  }
+}, [active])
+
 
   const [user, setUser] = useState(null)
 
@@ -2246,7 +2271,76 @@ useEffect(() => {
         {active === "notices"   && <Notices   data={notices}   setData={setNotices}  />}
         {active === "gallery"   && <Gallery   data={gallery}   setData={setGallery}  />}
         {active === "fees"      && <Fees      data={fees}      setData={setFees}     students={students} courses={courses} />}
+        {active === "enrollments" && (
+  <div>
+    <div style={{ marginBottom: 28 }}>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "var(--gold)", marginBottom: 8 }}>Enrollments</div>
+      <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 28, color: "var(--cream)", margin: 0 }}>Course Enrollments</h2>
+    </div>
+
+    {/* Stats */}
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px,1fr))", gap: 16, marginBottom: 28 }}>
+      {[
+        { label: "Total Enrollments", val: enrollments.length, icon: "📋" },
+        { label: "Unique Students",   val: new Set(enrollments.map(e => e.student?._id)).size, icon: "👥" },
+        { label: "Unique Courses",    val: new Set(enrollments.map(e => e.courseId)).size, icon: "📚" },
+      ].map((s, i) => (
+        <div key={i} className="card" style={{ padding: 20, textAlign: "center" }}>
+          <div style={{ fontSize: 28, marginBottom: 6 }}>{s.icon}</div>
+          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 28, fontWeight: 900, color: "var(--gold)" }}>{s.val}</div>
+          <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 4 }}>{s.label}</div>
+        </div>
+      ))}
+    </div>
+
+    {/* Table */}
+    <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+      <div style={{ padding: "20px 24px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span style={{ fontWeight: 700, color: "var(--cream)", fontSize: 15 }}>All Enrollments</span>
+        <span style={{ fontSize: 12, color: "var(--text-muted)" }}>{enrollments.length} total</span>
+      </div>
+
+      {enrollLoading ? (
+        <div style={{ padding: 40, textAlign: "center", color: "var(--gold)" }}>⏳ Loading...</div>
+      ) : enrollments.length === 0 ? (
+        <div style={{ padding: 40, textAlign: "center", color: "var(--text-muted)" }}>No enrollments yet.</div>
+      ) : (
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+            <thead>
+              <tr style={{ background: "rgba(255,255,255,0.03)" }}>
+                {["#", "Student", "Email", "Course", "Badge", "Fee", "Enrolled On"].map(h => (
+                  <th key={h} style={{ padding: "12px 16px", textAlign: "left", color: "var(--text-muted)", fontWeight: 600, fontSize: 11, letterSpacing: 1, textTransform: "uppercase", borderBottom: "1px solid rgba(255,255,255,0.06)", whiteSpace: "nowrap" }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {enrollments.map((e, i) => (
+                <tr key={e._id} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                  <td style={{ padding: "12px 16px", color: "var(--text-muted)" }}>{i + 1}</td>
+                  <td style={{ padding: "12px 16px", color: "var(--cream)", fontWeight: 600 }}>{e.student?.name || "—"}</td>
+                  <td style={{ padding: "12px 16px", color: "var(--text-muted)" }}>{e.student?.email || "—"}</td>
+                  <td style={{ padding: "12px 16px", color: "var(--cream)" }}>{e.courseName}</td>
+                  <td style={{ padding: "12px 16px" }}>
+                    <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 10px", borderRadius: 100, background: "rgba(201,168,76,0.12)", color: "var(--gold)" }}>{e.courseBadge || "—"}</span>
+                  </td>
+                  <td style={{ padding: "12px 16px", color: "var(--gold)", fontWeight: 700 }}>
+                    {e.courseFee ? "₹" + Number(e.courseFee).toLocaleString() : "—"}
+                  </td>
+                  <td style={{ padding: "12px 16px", color: "var(--text-muted)" }}>
+                    {e.enrolledAt ? new Date(e.enrolledAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "—"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  </div>
+)}
         {active === "settings"  && <SiteSettings data={site} setData={setSite} />}
+
       </div>
       <style>{`
         @media (max-width: 900px) {
